@@ -1,8 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { ApolloProvider } from 'react-apollo'
+import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import apolloClient from './apolloClient'
 import history from './history'
 import store from './store'
 import Portable from '../pages/portable'
@@ -13,11 +12,11 @@ store.dispatch(setClientType('portable'))
 const target = document.getElementById('chat-root')
 
 const App = (
-  <ApolloProvider store={store} client={apolloClient}>
+  <Provider store={store}>
     <ConnectedRouter history={history}>
       <Portable />
     </ConnectedRouter>
-  </ApolloProvider>
+  </Provider>
 )
 
 render(App, target)

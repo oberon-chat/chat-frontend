@@ -2,7 +2,6 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import persistState from 'redux-localstorage'
 import thunk from 'redux-thunk'
-import apolloClient from './apolloClient'
 import history from './history'
 import rootReducer from '../reducers'
 
@@ -12,8 +11,7 @@ const enhancers = [
 ]
 const middleware = [
   thunk,
-  routerMiddleware(history),
-  apolloClient.middleware()
+  routerMiddleware(history)
 ]
 
 if (process.env.NODE_ENV === 'development') {

@@ -3,15 +3,21 @@ import { Route, Switch } from 'react-router-dom'
 import { Layout as LayoutComponent } from 'antd'
 import DraggableBanner from '../Layout/_DraggableBanner'
 import FlashMessages from '../../components/FlashMessages'
-import LoginPage from './Login'
+import ApolloClient from '../../components/ApolloClient'
 
-export const Login = () => (
+import LoginPage from './Login'
+import LoginCallback from './Callback'
+
+const Login = () => (
   <LayoutComponent className='window-height window-width'>
     <DraggableBanner />
     <FlashMessages />
-    <Switch>
-      <Route component={LoginPage} />
-    </Switch>
+    <ApolloClient client='login'>
+      <Switch>
+        <Route path='/login/:provider/callback' component={LoginCallback} />
+        <Route component={LoginPage} />
+      </Switch>
+    </ApolloClient>
   </LayoutComponent>
 )
 

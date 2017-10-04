@@ -1,21 +1,49 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { login as loginCurrentUser } from '../../actions/currentUser'
+import { logIn as logInCurrentUser } from '../../actions/currentUser'
 import { fetchSocket } from '../../actions/socket'
 import { isLoggedIn } from '../../reducers/currentUser'
 import history from '../../app/history'
 import Particles from '../../components/Particles'
 import Redirect from '../../components/Redirect'
 import LoginForm from './_LoginForm'
+import { Button } from 'antd'
 
-const Login = ({ loggedIn, onLogin }) => {
+const Login = ({ loggedIn, logInToClient, logInToServer }) => {
+  const landingPage = window.location.pathname !== '/' ? window.location.pathname : '/rooms'
+
   if (loggedIn) {
-    return <Redirect to={'/rooms'} />
+    return <Redirect to={landingPage} />
   }
 
   const onSubmit = async (values) => {
-    onLogin(values)
-    history.push('/rooms')
+    logInToClient(values)
+    history.push(landingPage)
+  }
+
+  const onFacebookLogin = () => {
+    const clientId = '527947334211357'
+    const redirectUri = window.location.origin + '/login/facebook/callback'
+    const url = [
+      'https://www.facebook.com/v2.10/dialog/oauth',
+      '?client_id=' + clientId,
+      '&response_type=code',
+      '&scope=email,public_profile',
+      '&redirect_uri=' + redirectUri
+    ].join('')
+
+    window.location = url
+  }
+
+  const onGitHubLogin = () => {
+    const clientId = '8a42e7b25f7124bad238'
+    const url = [
+      'https://github.com/login/oauth/authorize',
+      '?client_id=' + clientId,
+      '&scope=user'
+    ].join('')
+
+    window.location = url
   }
 
   return (
@@ -24,6 +52,8 @@ const Login = ({ loggedIn, onLogin }) => {
       <div id='login-content' className='center-children'>
         <div>
           <h1>Login</h1>
+          <Button onClick={onFacebookLogin}>Log in with Facebook</Button>
+          <Button onClick={onGitHubLogin}>Log in with GitHub</Button>
           <LoginForm onSubmit={onSubmit} />
         </div>
       </div>
@@ -36,8 +66,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onLogin: (data) => {
-    dispatch(loginCurrentUser(data))
+  logInToClient: (data) => {
+    dispatch(logInCurrentUser(data))
     dispatch(fetchSocket())
   }
 })

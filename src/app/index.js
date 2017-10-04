@@ -1,13 +1,12 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { ApolloProvider } from 'react-apollo'
+import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import apolloClient from './apolloClient'
 import history from './history'
 import store from './store'
 import Layout from '../pages/Layout'
 import registerServiceWorker from './registerServiceWorker'
-import logoutExpiredSessions from './logoutExpiredSessions'
+import clearExpiredSessions from './clearExpiredSessions'
 import { setClientType } from '../actions/client'
 
 store.dispatch(setClientType('web'))
@@ -15,13 +14,13 @@ store.dispatch(setClientType('web'))
 const target = document.getElementById('chat-root')
 
 const App = (
-  <ApolloProvider store={store} client={apolloClient}>
+  <Provider store={store}>
     <ConnectedRouter history={history}>
       <Layout />
     </ConnectedRouter>
-  </ApolloProvider>
+  </Provider>
 )
 
 render(App, target)
 registerServiceWorker()
-logoutExpiredSessions()
+clearExpiredSessions()
