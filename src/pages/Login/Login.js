@@ -17,7 +17,7 @@ const Login = ({ loggedIn, logInToClient, logInToServer }) => {
   }
 
   const onSubmit = async (values) => {
-    logInToClient(values)
+    logInToClient({ name: values.username, ...values })
     history.push(landingPage)
   }
 

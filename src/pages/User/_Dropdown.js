@@ -19,7 +19,7 @@ export const UserDropdown = ({ currentUser }) => {
   return (
     <Dropdown overlay={content}>
       <a className='ant-dropdown-link'>
-        {currentUser.username} <Icon type='down' />
+        {currentUser.name} <Icon type='down' />
       </a>
     </Dropdown>
   )
