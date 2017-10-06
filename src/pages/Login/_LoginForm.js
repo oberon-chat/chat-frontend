@@ -2,10 +2,10 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { Button, Form, Icon, Input } from 'antd'
 
-const UsernameInput = (props) => (
+const NameInput = (props) => (
   <Input
     prefix={<Icon type='user' style={{ fontSize: '13px' }} />}
-    placeholder='Username'
+    placeholder='Name'
     {...props.input}
   />
 )
@@ -13,8 +13,8 @@ const UsernameInput = (props) => (
 export const NotesForm = ({ handleSubmit, pristine, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Form.Item>
-      <label htmlFor='username'>Username</label>
-      <Field name='username' component={UsernameInput} />
+      <label htmlFor='name'>Name</label>
+      <Field name='name' component={NameInput} />
     </Form.Item>
     <Button
       type='primary'

@@ -38,11 +38,9 @@ export const fetchSocket = (callback) => (dispatch, getState) => {
   const initialized = socket && socket.connection
 
   if (!initialized && socket.url) {
-    // const url = socket.url
-    // const token = user.token
-    // const connection = new Socket(url, {params: {token: token}})
-
-    const params = { user: user.username }
+    const userParams = { token: user.token }
+    const guestParams = { type: 'guest', name: user.name || '' }
+    const params = user.token ? userParams : guestParams
     const connection = new Socket(socket.url, { params: params })
 
     connection.onOpen(() => dispatch(socketOpen()))

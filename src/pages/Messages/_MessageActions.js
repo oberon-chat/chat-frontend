@@ -9,7 +9,7 @@ const Actions = ({ currentUser, message, onDelete, room }) => {
   const { body, id, user } = message
 
   const OwnerActions = () => {
-    if (currentUser.username !== user.name) {
+    if (currentUser.id !== user.id) {
       return null
     }
 
