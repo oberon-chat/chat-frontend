@@ -4,6 +4,7 @@ import { logIn as logInCurrentUser } from '../../actions/currentUser'
 import { fetchSocket } from '../../actions/socket'
 import { isLoggedIn } from '../../reducers/currentUser'
 import history from '../../app/history'
+import ApolloClient from '../../components/ApolloClient'
 import Particles from '../../components/Particles'
 import Redirect from '../../components/Redirect'
 import LoginForm from './_LoginForm'
@@ -52,8 +53,10 @@ const Login = ({ loggedIn, logInToClient, logInToServer }) => {
       <div id='login-content' className='center-children'>
         <div>
           <h1>Login</h1>
-          <Button onClick={onFacebookLogin}>Log in with Facebook</Button>
-          <Button onClick={onGitHubLogin}>Log in with GitHub</Button>
+          <ApolloClient client='oauth2'>
+            <Button onClick={onFacebookLogin}>Log in with Facebook</Button>
+            <Button onClick={onGitHubLogin}>Log in with GitHub</Button>
+          </ApolloClient>
           <LoginForm onSubmit={onSubmit} />
         </div>
       </div>

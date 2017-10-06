@@ -4,6 +4,7 @@ const initialState = {}
 
 export const currentUserReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'CURRENT_USER_UPDATE':
     case 'CURRENT_USER_LOGIN':
       return {
         ...state,

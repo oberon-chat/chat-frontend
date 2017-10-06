@@ -6,25 +6,13 @@ import ErrorHandler from '../../components/ErrorHandler'
 import FlashMessages from '../../components/FlashMessages'
 import DraggableBanner from './_DraggableBanner'
 import Page from './_Page'
-import Main from './_Main'
-import Sidebar from './_Sidebar'
-import ConnectionError from '../../components/ConnectionError'
+import LoggedInRoutes from './_LoggedInRoutes'
+import Login from '../Login'
 import '../../static/antd.css'
 import '../../static/common.css'
 import '../../static/ui.css'
 
-import Login from '../Login'
-import Room from '../Room'
-
 export const Layout = ({ loggedIn }) => {
-  const loggedInRoutes = (
-    <Switch>
-      <Route path={'/rooms/:room/messages/:messageId/edit'} component={Room} />
-      <Route path={'/rooms/:room'} component={Room} />
-      <Route component={Main} />
-    </Switch>
-  )
-
   const loggedOutRoutes = (
     <Switch>
       <Route component={Login} />
@@ -36,9 +24,7 @@ export const Layout = ({ loggedIn }) => {
       <DraggableBanner />
       <FlashMessages />
       <ErrorHandler>
-        { loggedIn && <ConnectionError /> }
-        { loggedIn && <Sidebar /> }
-        { loggedIn ? loggedInRoutes : loggedOutRoutes }
+        { loggedIn ? <LoggedInRoutes /> : loggedOutRoutes }
       </ErrorHandler>
     </Page>
   )

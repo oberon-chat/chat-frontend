@@ -30,7 +30,7 @@ export const joinChannel = (dispatch, getState, key, channelCallbacks, onSuccess
     }
 
     const onJoinError = (error) => {
-      return onError ? onError() : false
+      return onError ? onError(error) : false
     }
 
     return channel.join()

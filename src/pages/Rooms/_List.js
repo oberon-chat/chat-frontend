@@ -20,7 +20,7 @@ export class RoomsList extends Component {
     const renderRoom = (room, name) => {
       const lastMessage = meta(room, 'last_message')
       const lastMessageAt = lastMessage ? moment(lastMessage.inserted_at).unix() : 0
-      const lastViewedAt = Math.floor((lastViewed(name) || 0)/ 1000)
+      const lastViewedAt = Math.floor((lastViewed(name) || 0) / 1000)
       const classes = lastMessageAt > lastViewedAt ? 'new-message' : ''
 
       return (
