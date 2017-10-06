@@ -4,11 +4,11 @@ import { reset as resetForm } from 'redux-form'
 import { setActiveRoom } from '../../actions/portable'
 import { createRoom, joinRooms, joinRoom } from '../../actions/rooms'
 import { submitMessage } from '../../actions/roomMessages'
-import RoomMessagesForm from '../RoomMessages/_Form'
+import MessagesForm from '../Messages/_Form'
 
 export const MessageForm = ({ form, onSubmit }) => {
   return (
-    <RoomMessagesForm
+    <MessagesForm
       form={form}
       onSubmit={onSubmit}
     />
