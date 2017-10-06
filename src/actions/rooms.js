@@ -1,12 +1,11 @@
 import { Presence } from 'phoenix'
 import { map, reverse } from 'lodash'
 import { camelizeKeys } from 'humps'
+import { joinChannel } from './channels'
 import { addMessage, removeMessage, replaceMessage, replaceMessages } from './roomMessages'
 import { updateRoomUsers } from './roomUsers'
 import { getRooms, getRoomsChannel } from '../reducers/rooms'
-import { getRoomChannel } from '../reducers/roomsJoined'
 import { getRoomUsers } from '../reducers/roomUsers'
-import { withSocketConnection } from '../reducers/socket'
 
 export const createRoom = (roomName) => (dispatch, getState) => {
   const rooms = getRoomsChannel(getState())
@@ -25,111 +24,66 @@ const updateRooms = (rooms) => ({
 })
 
 export const joinRooms = (onSuccess, onError) => (dispatch, getState) => {
-  const rooms = getRoomsChannel(getState())
-
-  if (rooms.state === 'joined') {
-    if (onSuccess) { return onSuccess() }
-
-    return rooms
-  }
-
-  withSocketConnection(getState, (connection) => {
-    const rooms = connection.channel('rooms', {})
-
-    rooms.on('presence_state', (data) => {
+  const key = 'rooms'
+  const channelCallbacks = (channel) => {
+    channel.on('presence_state', (data) => {
       const current = getRooms(getState())
       const updated = Presence.syncState(current, data)
 
       dispatch(updateRooms(updated))
     })
 
-    rooms.on('presence_diff', (data) => {
+    channel.on('presence_diff', (data) => {
       const current = getRooms(getState())
       const updated = Presence.syncDiff(current, data)
 
       dispatch(updateRooms(updated))
     })
 
-    const onJoinSuccess = () => {
-      dispatch({
-        type: 'JOIN_ROOMS',
-        channel: rooms
-      })
+    return channel
+  }
 
-      if (onSuccess) { onSuccess() }
-    }
-
-    const onJoinError = (error) => {
-      if (onError) { onError(error) }
-    }
-
-    return rooms.join()
-      .receive('ok', onJoinSuccess)
-      .receive('error', onJoinError)
-  })
+  return joinChannel(dispatch, getState, key, channelCallbacks, onSuccess, onError)
 }
 
 export const joinRoom = (roomName, onSuccess, onError) => (dispatch, getState) => {
-  const room = getRoomChannel(getState(), roomName)
-
-  if (room.state === 'joined') {
-    if (onSuccess) { onSuccess() }
-
-    return room
-  }
-
-  withSocketConnection(getState, (connection) => {
-    const room = connection.channel('room:' + roomName, {})
-
-    room.on('presence_state', (data) => {
+  const key = 'room:' + roomName
+  const channelCallbacks = (channel) => {
+    channel.on('presence_state', (data) => {
       const current = getRoomUsers(getState(), roomName)
       const users = Presence.syncState(current, data)
 
       dispatch(updateRoomUsers(roomName, users))
     })
 
-    room.on('presence_diff', (data) => {
+    channel.on('presence_diff', (data) => {
       const current = getRoomUsers(getState(), roomName)
       const users = Presence.syncDiff(current, data)
 
       dispatch(updateRoomUsers(roomName, users))
     })
 
-    room.on('message_state', (data) => {
+    channel.on('message_state', (data) => {
       const messages = reverse((data || {}).messages)
       const cased = map(messages, (message) => camelizeKeys(message, {}))
 
       dispatch(replaceMessages(roomName, cased))
     })
 
-    room.on('message:created', (data) => (
+    channel.on('message:created', (data) => (
       dispatch(addMessage(roomName, camelizeKeys(data, {})))
     ))
 
-    room.on('message:updated', (data) => (
+    channel.on('message:updated', (data) => (
       dispatch(replaceMessage(roomName, camelizeKeys(data, {})))
     ))
 
-    room.on('message:deleted', (data) => (
+    channel.on('message:deleted', (data) => (
       dispatch(removeMessage(roomName, camelizeKeys(data, {})))
     ))
 
-    const onJoinSuccess = () => {
-      dispatch({
-        type: 'JOIN_ROOM',
-        key: roomName,
-        channel: room
-      })
+    return channel
+  }
 
-      if (onSuccess) { onSuccess() }
-    }
-
-    const onJoinError = (error) => {
-      if (onError) { onError(error) }
-    }
-
-    return room.join()
-      .receive('ok', onJoinSuccess)
-      .receive('error', onJoinError)
-  })
+  return joinChannel(dispatch, getState, key, channelCallbacks, onSuccess, onError)
 }

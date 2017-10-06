@@ -32,6 +32,7 @@
   line-height: 1.5;
   /* Structural Styles */
   /* Layout */
+  /* Sidebar */
   /* Content */ }
   #chat-root h1, #chat-root h2, #chat-root h3, #chat-root h4, #chat-root h5, #chat-root h6, #chat-root a, #chat-root p, #chat-root li, #chat-root input, #chat-root textarea, #chat-root span, #chat-root div {
     -webkit-font-smoothing: antialiased;
@@ -89,6 +90,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between; }
+  #chat-root ul.rooms-list li.new-message {
+    font-weight: 600; }
   #chat-root .connection-error {
     background: #fff;
     display: flex;

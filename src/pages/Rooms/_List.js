@@ -5,10 +5,9 @@ import { map } from 'lodash'
 import moment from 'moment'
 import { joinRooms } from '../../actions/rooms'
 import { getRooms } from '../../reducers/rooms'
-import { getRoomsJoined } from '../../reducers/roomsJoined'
+import { getLastViewed } from '../../reducers/roomsMeta'
 import { meta } from '../../helpers/presence'
 import CreateRoomForm from './_Form'
-import { Icon } from 'antd'
 
 export class RoomsList extends Component {
   componentDidMount () {
@@ -16,25 +15,19 @@ export class RoomsList extends Component {
   }
 
   render () {
-    const { rooms, roomsJoined } = this.props
+    const { rooms, lastViewed } = this.props
 
     const renderRoom = (room, name) => {
       const lastMessage = meta(room, 'last_message')
-      const timestamp = lastMessage ? moment(lastMessage.timestamp).calendar() : null
+      const lastMessageAt = lastMessage ? moment(lastMessage.inserted_at).unix() : 0
+      const lastViewedAt = Math.floor((lastViewed(name) || 0)/ 1000)
+      const classes = lastMessageAt > lastViewedAt ? 'new-message' : ''
 
       return (
-        <li key={name}>
+        <li key={name} className={classes}>
           <Link to={'/rooms/' + name}>
-            <strong>{name}</strong>
+            {name}
           </Link>
-          {' '}
-          {timestamp &&
-            <span>
-              <Icon type='clock-circle-o' />
-              {' '}
-              {timestamp}
-            </span>
-          }
         </li>
       )
     }
@@ -42,7 +35,7 @@ export class RoomsList extends Component {
     return (
       <div>
         <h3>Rooms</h3>
-        <ul>
+        <ul className='rooms-list'>
           { map(rooms, renderRoom) }
         </ul>
         <CreateRoomForm />
@@ -52,8 +45,8 @@ export class RoomsList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  rooms: getRooms(state),
-  roomsJoined: getRoomsJoined(state)
+  lastViewed: (key) => getLastViewed(state, key),
+  rooms: getRooms(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({

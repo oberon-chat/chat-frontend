@@ -1,4 +1,4 @@
-import { getRoomChannel } from '../reducers/roomsJoined'
+import { getRoomChannel } from '../reducers/rooms'
 import { getRoomMessage } from '../reducers/roomMessages'
 
 export const addMessage = (roomName, message) => ({

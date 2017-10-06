@@ -1,31 +1,18 @@
-const initialState = {
-  channel: undefined,
-  rooms: {}
-}
+import { getChannel } from './channels'
+
+const initialState = {}
 
 export const roomsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'JOIN_ROOMS':
-      return {
-        ...state,
-        channel: action.channel
-      }
     case 'UPDATE_ROOMS':
-      return {
-        ...state,
-        rooms: action.rooms
-      }
-    case 'SOCKET_CLOSE':
-      return {
-        ...state,
-        channel: undefined
-      }
+      return action.rooms
     default:
       return state
   }
 }
 
-export const getRoomsChannel = (state) => (state.rooms || {}).channel || {}
-export const getRooms = (state) => (state.rooms || {}).rooms || {}
+export const getRooms = (state) => state.rooms || {}
+export const getRoomsChannel = (state) => getChannel(state, 'rooms')
+export const getRoomChannel = (state, key) => getChannel(state, 'room:' + key)
 
 export default roomsReducer
