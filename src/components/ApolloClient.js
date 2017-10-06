@@ -7,7 +7,7 @@ class ApolloClient extends Component {
     client: PropTypes.object.isRequired
   }
 
-  getChildContext() {
+  getChildContext () {
     const key = this.props.client
     const client = clients[key]
 
