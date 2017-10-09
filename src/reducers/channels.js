@@ -10,6 +10,7 @@ export const channelsReducer = (state = initialState, action) => {
     case 'CHANNEL_LEAVE':
       delete state[action.key]
       return state
+    case 'CURRENT_USER_LOGOUT':
     case 'SOCKET_CLOSE':
       return initialState
     default:

@@ -10,6 +10,7 @@ const socketReducer = (state = initialState, action) => {
       return {...state, connection: action.connection}
     case 'SOCKET_OPEN':
       return {...state, connected: true}
+    case 'CURRENT_USER_LOGOUT':
     case 'SOCKET_CLOSE':
       return initialState
     default:

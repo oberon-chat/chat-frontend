@@ -15,5 +15,6 @@ const clientReducer = (state = initialState, action) => {
 }
 
 export const getClientType = (state) => (state.client || {}).clientType
+export const isClientType = (state, key) => getClientType(state) === key
 
 export default clientReducer
