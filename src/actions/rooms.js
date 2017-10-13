@@ -1,12 +1,12 @@
 import { Presence } from 'phoenix'
-import { camelizeKeys } from 'humps'
-import { map, reverse } from 'lodash'
+import { reverse } from 'lodash'
 import { joinChannel } from './channels'
 import { addMessage, removeMessage, replaceMessage, replaceMessages } from './roomMessages'
 import { addRoomSubscription, replaceRoomSubscriptions } from './roomSubscriptions'
 import { updateRoomUsers } from './roomUsers'
 import { getRooms, getRoomsChannel } from '../reducers/rooms'
 import { getRoomUsers } from '../reducers/roomUsers'
+import { camelize } from '../helpers/data'
 
 export const createRoom = (roomName) => (dispatch, getState) => {
   const channel = getRoomsChannel(getState())
@@ -42,9 +42,11 @@ export const joinRooms = (onSuccess, onError) => (dispatch, getState) => {
     })
 
     channel.on('room:subscriptions', (data) => {
-      const cased = map(data.subscriptions, (subscription) => camelizeKeys(subscription, {}))
+      dispatch(replaceRoomSubscriptions(camelize(data.subscriptions)))
+    })
 
-      dispatch(replaceRoomSubscriptions(cased))
+    channel.on('room:subscribed', (data) => {
+      dispatch(addRoomSubscription(camelize(data)))
     })
 
     return channel
@@ -71,26 +73,25 @@ export const joinRoom = (roomName, onSuccess, onError) => (dispatch, getState) =
     })
 
     channel.on('room:subscribed', (data) => {
-      dispatch(addRoomSubscription(camelizeKeys(data, {})))
+      dispatch(addRoomSubscription(camelize(data)))
     })
 
     channel.on('messages:list', (data) => {
-      const messages = reverse((data || {}).messages)
-      const cased = map(messages, (message) => camelizeKeys(message, {}))
+      const messages = camelize(reverse((data || {}).messages))
 
-      dispatch(replaceMessages(roomName, cased))
+      dispatch(replaceMessages(roomName, messages))
     })
 
     channel.on('message:created', (data) => (
-      dispatch(addMessage(roomName, camelizeKeys(data, {})))
+      dispatch(addMessage(roomName, camelize(data)))
     ))
 
     channel.on('message:updated', (data) => (
-      dispatch(replaceMessage(roomName, camelizeKeys(data, {})))
+      dispatch(replaceMessage(roomName, camelize(data)))
     ))
 
     channel.on('message:deleted', (data) => (
-      dispatch(removeMessage(roomName, camelizeKeys(data, {})))
+      dispatch(removeMessage(roomName, camelize(data)))
     ))
 
     return channel
