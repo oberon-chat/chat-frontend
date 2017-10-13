@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
-import { isLoggedIn } from '../../reducers/currentUser'
+import { getIsLoggedIn } from '../../reducers/currentUser'
 import ErrorHandler from '../../components/ErrorHandler'
 import FlashMessages from '../../components/FlashMessages'
 import DraggableBanner from './_DraggableBanner'
@@ -12,7 +12,7 @@ import '../../static/antd.css'
 import '../../static/common.css'
 import '../../static/ui.css'
 
-export const Layout = ({ loggedIn }) => {
+export const Layout = ({ isLoggedIn }) => {
   const loggedOutRoutes = (
     <Switch>
       <Route component={Login} />
@@ -24,7 +24,7 @@ export const Layout = ({ loggedIn }) => {
       <DraggableBanner />
       <FlashMessages />
       <ErrorHandler>
-        { loggedIn ? <LoggedInRoutes /> : loggedOutRoutes }
+        { isLoggedIn ? <LoggedInRoutes /> : loggedOutRoutes }
       </ErrorHandler>
     </Page>
   )
@@ -33,7 +33,7 @@ export const Layout = ({ loggedIn }) => {
 Layout.displayName = 'Layout'
 
 const mapStateToProps = (state) => ({
-  loggedIn: isLoggedIn(state)
+  isLoggedIn: getIsLoggedIn(state)
 })
 
 export default withRouter(connect(mapStateToProps)(Layout))

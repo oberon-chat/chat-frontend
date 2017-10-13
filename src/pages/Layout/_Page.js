@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchSocket } from '../../actions/socket'
-import { isLoggedIn } from '../../reducers/currentUser'
+import { getIsLoggedIn } from '../../reducers/currentUser'
 import { Layout } from 'antd'
 
 class Page extends Component {
   componentWillMount () {
-    if (this.props.loggedIn) {
+    if (this.props.isLoggedIn) {
       this.props.withLogin()
     }
   }
@@ -23,7 +23,7 @@ class Page extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  loggedIn: isLoggedIn(state)
+  isLoggedIn: getIsLoggedIn(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({

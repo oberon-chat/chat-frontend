@@ -1,17 +1,17 @@
 import { Presence } from 'phoenix'
-import { map, reverse } from 'lodash'
 import { camelizeKeys } from 'humps'
+import { map, reverse } from 'lodash'
 import { joinChannel } from './channels'
 import { addMessage, removeMessage, replaceMessage, replaceMessages } from './roomMessages'
-import { updateRoomSubscriptions } from './roomSubscriptions'
+import { addRoomSubscription, replaceRoomSubscriptions } from './roomSubscriptions'
 import { updateRoomUsers } from './roomUsers'
 import { getRooms, getRoomsChannel } from '../reducers/rooms'
 import { getRoomUsers } from '../reducers/roomUsers'
 
 export const createRoom = (roomName) => (dispatch, getState) => {
-  const rooms = getRoomsChannel(getState())
+  const channel = getRoomsChannel(getState())
 
-  return rooms.push('rooms:create', {name: roomName})
+  return channel.push('rooms:create', {name: roomName})
 }
 
 export const viewRoom = (roomName) => ({
@@ -42,7 +42,9 @@ export const joinRooms = (onSuccess, onError) => (dispatch, getState) => {
     })
 
     channel.on('room:subscriptions', (data) => {
-      dispatch(updateRoomSubscriptions(data))
+      const cased = map(data.subscriptions, (subscription) => camelizeKeys(subscription, {}))
+
+      dispatch(replaceRoomSubscriptions(cased))
     })
 
     return channel
@@ -66,6 +68,10 @@ export const joinRoom = (roomName, onSuccess, onError) => (dispatch, getState) =
       const users = Presence.syncDiff(current, data)
 
       dispatch(updateRoomUsers(roomName, users))
+    })
+
+    channel.on('room:subscribed', (data) => {
+      dispatch(addRoomSubscription(camelizeKeys(data, {})))
     })
 
     channel.on('messages:list', (data) => {

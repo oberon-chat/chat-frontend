@@ -26,27 +26,27 @@ export const removeMessage = (roomName, message) => ({
 })
 
 export const submitMessage = (roomName, message) => (dispatch, getState) => {
-  const room = getRoomChannel(getState(), roomName)
+  const channel = getRoomChannel(getState(), roomName)
 
-  return room.push('message:create', { body: message })
+  return channel.push('message:create', { body: message })
 }
 
 export const editMessage = (roomName, messageId, body) => (dispatch, getState) => {
   const state = getState()
-  const room = getRoomChannel(state, roomName)
+  const channel = getRoomChannel(state, roomName)
   const message = getRoomMessage(state, roomName, messageId)
   const updatedMessage = {
     ...message,
     body: body
   }
 
-  return room.push('message:update', updatedMessage)
+  return channel.push('message:update', updatedMessage)
 }
 
 export const deleteMessage = (roomName, messageId) => (dispatch, getState) => {
   const state = getState()
-  const room = getRoomChannel(state, roomName)
+  const channel = getRoomChannel(state, roomName)
   const message = getRoomMessage(state, roomName, messageId)
 
-  return room.push('message:delete', message)
+  return channel.push('message:delete', message)
 }

@@ -17,7 +17,7 @@ export const currentUserReducer = (state = initialState, action) => {
   }
 }
 
-export const isLoggedIn = (state) => !isEqual(initialState, state.currentUser)
+export const getIsLoggedIn = (state) => !isEqual(initialState, state.currentUser)
 
 export const getCurrentUser = (state) => state.currentUser
 

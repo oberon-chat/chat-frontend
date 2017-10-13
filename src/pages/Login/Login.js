@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { logIn as logInCurrentUser } from '../../actions/currentUser'
 import { fetchSocket } from '../../actions/socket'
-import { isLoggedIn } from '../../reducers/currentUser'
+import { getIsLoggedIn } from '../../reducers/currentUser'
 import history from '../../app/history'
 import ApolloClient from '../../components/ApolloClient'
 import Particles from '../../components/Particles'
@@ -10,10 +10,10 @@ import Redirect from '../../components/Redirect'
 import LoginForm from './_LoginForm'
 import { Button } from 'antd'
 
-const Login = ({ loggedIn, logInToClient, logInToServer }) => {
+const Login = ({ isLoggedIn, logInToClient, logInToServer }) => {
   const landingPage = window.location.pathname !== '/' ? window.location.pathname : '/rooms'
 
-  if (loggedIn) {
+  if (isLoggedIn) {
     return <Redirect to={landingPage} />
   }
 
@@ -65,7 +65,7 @@ const Login = ({ loggedIn, logInToClient, logInToServer }) => {
 }
 
 const mapStateToProps = (state) => ({
-  loggedIn: isLoggedIn(state)
+  isLoggedIn: getIsLoggedIn(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
