@@ -9,6 +9,7 @@ import portableReducer from './portable'
 import roomsReducer from './rooms'
 import roomsMetaReducer from './roomsMeta'
 import roomMessagesReducer from './roomMessages'
+import roomSubscriptionsReducer from './roomSubscriptions'
 import roomUsersReducer from './roomUsers'
 import socketReducer from './socket'
 
@@ -22,6 +23,7 @@ export default combineReducers({
   rooms: roomsReducer,
   roomsMeta: roomsMetaReducer,
   roomMessages: roomMessagesReducer,
+  roomSubscriptions: roomSubscriptionsReducer,
   roomUsers: roomUsersReducer,
   routing: routerReducer,
   socket: socketReducer
