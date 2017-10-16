@@ -15,6 +15,6 @@ export const roomSubscriptionsReducer = (state = initialState, action) => {
 
 export const getSubscriptions = (state) => state.roomSubscriptions || []
 export const getRooms = (state) => map(getSubscriptions(state), (subscription) => subscription.room)
-export const getIsSubscribed = (state, roomName) => find(getSubscriptions(state), (subscription) => subscription.room.name === roomName)
+export const getIsSubscribed = (state, slug) => find(getSubscriptions(state), (subscription) => subscription.room.slug === slug)
 
 export default roomSubscriptionsReducer

@@ -24,8 +24,8 @@ export const roomsMetaReducer = (state = initialState, action) => {
 }
 
 export const getRoomsMeta = (state) => state.roomsMeta || {}
-export const getRoomMeta = (state, name) => getRoomsMeta(state)[name] || {}
-export const getLastViewed = (state, name) => getRoomMeta(state, name).lastViewed
+export const getRoomMeta = (state, slug) => getRoomsMeta(state)[slug] || {}
+export const getLastViewed = (state, slug) => getRoomMeta(state, slug).lastViewed
 export const getActive = (state) => {
   const rooms = getRoomsMeta(state)
   const found = find(rooms, (room) => room.viewing)

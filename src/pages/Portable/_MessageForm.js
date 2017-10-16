@@ -31,9 +31,14 @@ const mapDispatchToProps = (dispatch, { isActive, form, room }) => ({
     }
 
     const onJoinRooms = async () => {
-      if (!isActive) { await dispatch(createRoom(room)) }
+      const action = (slug) => dispatch(joinRoom(slug, onJoinRoom))
+      const onCreateRoom = (response) => action(response.room.slug)
 
-      return dispatch(joinRoom(room, onJoinRoom))
+      if (!isActive) {
+        await dispatch(createRoom(room, onCreateRoom))
+      } else {
+        return action(room)
+      }
     }
 
     return dispatch(joinRooms(onJoinRooms))

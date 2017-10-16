@@ -1,5 +1,5 @@
-export const updateRoomUsers = (roomName, users) => ({
+export const updateRoomUsers = (room, users) => ({
   type: 'UPDATE_ROOM_USERS',
-  key: roomName,
+  key: room,
   users: users
 })

@@ -12,6 +12,6 @@ export const roomUsersReducer = (state = initialState, action) => {
   }
 }
 
-export const getRoomUsers = (state, name) => state.roomUsers[name] || {}
+export const getRoomUsers = (state, slug) => state.roomUsers[slug] || {}
 
 export default roomUsersReducer

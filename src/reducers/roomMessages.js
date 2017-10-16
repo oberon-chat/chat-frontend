@@ -42,12 +42,12 @@ export const roomMessagesReducer = (state = initialState, action) => {
   }
 }
 
-export const getRoomMessages = (state, name) => state.roomMessages[name] || []
-export const getRoomMessage = (state, name, id) => (
-  find(state.roomMessages[name], (message) => message.id === id) || {}
+export const getRoomMessages = (state, slug) => state.roomMessages[slug] || []
+export const getRoomMessage = (state, slug, id) => (
+  find(state.roomMessages[slug], (message) => message.id === id) || {}
 )
-export const getLastRoomMessage = (state, name, user) => (
-  find(reverse(clone(state.roomMessages[name])), (message) => message.user.id === user.id) || {}
+export const getLastRoomMessage = (state, slug, user) => (
+  find(reverse(clone(state.roomMessages[slug])), (message) => message.user.id === user.id) || {}
 )
 
 export default roomMessagesReducer

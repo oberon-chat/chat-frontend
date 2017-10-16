@@ -12,6 +12,7 @@ export const roomsReducer = (state = initialState, action) => {
 }
 
 export const getRooms = (state) => state.rooms || {}
+export const getRoom = (state, key) => getRooms(state)[key]
 export const getRoomsChannel = (state) => getChannel(state, 'rooms')
 export const getRoomChannel = (state, key) => getChannel(state, 'room:' + key)
 

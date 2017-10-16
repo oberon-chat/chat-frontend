@@ -18,16 +18,16 @@ export class RoomsList extends Component {
   render () {
     const { rooms, lastViewed } = this.props
 
-    const renderRoom = (room, name) => {
+    const renderRoom = (room, slug) => {
       const lastMessage = meta(room, 'last_message')
       const lastMessageAt = lastMessage ? moment(lastMessage.inserted_at).unix() : 0
-      const lastViewedAt = Math.floor((lastViewed(name) || 0) / 1000)
+      const lastViewedAt = Math.floor((lastViewed(slug) || 0) / 1000)
       const classes = lastMessageAt > lastViewedAt ? 'new-message' : ''
 
       return (
-        <li key={name} className={classes}>
-          <Link to={'/rooms/' + name}>
-            {name}
+        <li key={slug} className={classes}>
+          <Link to={'/rooms/' + slug}>
+            {slug}
           </Link>
         </li>
       )

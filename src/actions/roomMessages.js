@@ -1,40 +1,40 @@
 import { getRoomChannel } from '../reducers/rooms'
 import { getRoomMessage } from '../reducers/roomMessages'
 
-export const addMessage = (roomName, message) => ({
+export const addMessage = (slug, message) => ({
   type: 'ADD_ROOM_MESSAGE',
-  key: roomName,
+  key: slug,
   message: message
 })
 
-export const replaceMessage = (roomName, message) => ({
+export const replaceMessage = (slug, message) => ({
   type: 'REPLACE_ROOM_MESSAGE',
-  key: roomName,
+  key: slug,
   message: message
 })
 
-export const replaceMessages = (roomName, messages) => ({
+export const replaceMessages = (slug, messages) => ({
   type: 'REPLACE_ROOM_MESSAGES',
-  key: roomName,
+  key: slug,
   messages: messages
 })
 
-export const removeMessage = (roomName, message) => ({
+export const removeMessage = (slug, message) => ({
   type: 'REMOVE_ROOM_MESSAGE',
-  key: roomName,
+  key: slug,
   message: message
 })
 
-export const submitMessage = (roomName, message) => (dispatch, getState) => {
-  const channel = getRoomChannel(getState(), roomName)
+export const submitMessage = (slug, message) => (dispatch, getState) => {
+  const channel = getRoomChannel(getState(), slug)
 
   return channel.push('message:create', { body: message })
 }
 
-export const editMessage = (roomName, messageId, body) => (dispatch, getState) => {
+export const editMessage = (slug, messageId, body) => (dispatch, getState) => {
   const state = getState()
-  const channel = getRoomChannel(state, roomName)
-  const message = getRoomMessage(state, roomName, messageId)
+  const channel = getRoomChannel(state, slug)
+  const message = getRoomMessage(state, slug, messageId)
   const updatedMessage = {
     ...message,
     body: body
@@ -43,10 +43,10 @@ export const editMessage = (roomName, messageId, body) => (dispatch, getState) =
   return channel.push('message:update', updatedMessage)
 }
 
-export const deleteMessage = (roomName, messageId) => (dispatch, getState) => {
+export const deleteMessage = (slug, messageId) => (dispatch, getState) => {
   const state = getState()
-  const channel = getRoomChannel(state, roomName)
-  const message = getRoomMessage(state, roomName, messageId)
+  const channel = getRoomChannel(state, slug)
+  const message = getRoomMessage(state, slug, messageId)
 
   return channel.push('message:delete', message)
 }

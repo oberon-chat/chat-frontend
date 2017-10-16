@@ -1,7 +1,7 @@
 import { getRoomChannel } from '../reducers/rooms'
 
-export const createRoomSubscription = (roomName) => (dispatch, getState) => {
-  const channel = getRoomChannel(getState(), roomName)
+export const createRoomSubscription = (slug) => (dispatch, getState) => {
+  const channel = getRoomChannel(getState(), slug)
 
   return channel.push('room:subscribe')
 }

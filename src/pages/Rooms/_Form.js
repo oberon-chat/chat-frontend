@@ -39,13 +39,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, { room }) => ({
   onSubmit: async (data) => {
-    try {
-      await dispatch(createRoom(data.room))
+    const onSuccess = (response) => {
       dispatch(resetForm('createRoomForm'))
-      history.push('/rooms/' + data.room)
-    } catch (_error) {
+      notification('Successfully created room ' + data.room, 'success')
+      history.push('/rooms/' + response.room.slug)
+    }
+
+    const onError = () => {
       notification('Error creating room ' + room, 'error')
     }
+
+    await dispatch(createRoom(data.room, onSuccess, onError))
   }
 })
 
