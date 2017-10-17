@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch, { isActive, form, room }) => ({
       const onCreateRoom = (response) => action(response.room.slug)
 
       if (!isActive) {
-        await dispatch(createRoom(room, onCreateRoom))
+        await dispatch(createRoom(room, 'support', onCreateRoom))
       } else {
         return action(room)
       }

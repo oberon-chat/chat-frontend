@@ -8,11 +8,11 @@ import { getRooms, getRoomsChannel } from '../reducers/rooms'
 import { getRoomUsers } from '../reducers/roomUsers'
 import { camelize } from '../helpers/data'
 
-export const createRoom = (name, onSuccess, onError) => (dispatch, getState) => {
+export const createRoom = (name, type, onSuccess, onError) => (dispatch, getState) => {
   const channel = getRoomsChannel(getState())
 
   return channel
-    .push('rooms:create', {name: name})
+    .push('rooms:create', {name: name, type: type})
     .receive('ok', (response) => onSuccess && onSuccess(response))
     .receive('error', (response) => onError && onError(response))
 }
