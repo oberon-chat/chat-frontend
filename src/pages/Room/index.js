@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import history from '../../app/history'
-import { joinRoom, viewRoom } from '../../actions/rooms'
+import { joinRoomChannel, viewRoom } from '../../actions/rooms'
 import notification from '../../helpers/notification'
 import RoomContent from './_Content'
 import RoomSidebar from './_Sidebar'
@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch, { match }) => ({
       history.push('/rooms')
     }
 
-    dispatch(joinRoom(room, onSuccess, onError))
+    dispatch(joinRoomChannel(room, onSuccess, onError))
   }
 })
 

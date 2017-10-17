@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { reset as resetForm } from 'redux-form'
 import { setActiveRoom } from '../../actions/portable'
-import { createRoom, joinRooms, joinRoom } from '../../actions/rooms'
+import { createRoom, joinRoomChannel, joinRoomChannels } from '../../actions/rooms'
 import { submitMessage } from '../../actions/roomMessages'
 import MessagesForm from '../Messages/_Form'
 
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch, { isActive, form, room }) => ({
     }
 
     const onJoinRooms = async () => {
-      const action = (slug) => dispatch(joinRoom(slug, onJoinRoom))
+      const action = (slug) => dispatch(joinRoomChannel(slug, onJoinRoom))
       const onCreateRoom = (response) => action(response.room.slug)
 
       if (!isActive) {
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch, { isActive, form, room }) => ({
       }
     }
 
-    return dispatch(joinRooms(onJoinRooms))
+    return dispatch(joinRoomsChannel(onJoinRooms))
   }
 })
 

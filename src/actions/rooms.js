@@ -4,7 +4,7 @@ import { joinChannel } from './channels'
 import { addMessage, removeMessage, replaceMessage, replaceMessages } from './roomMessages'
 import { addRoomSubscription, replaceRoomSubscriptions } from './roomSubscriptions'
 import { updateRoomUsers } from './roomUsers'
-import { getRooms, getRoomsChannel } from '../reducers/rooms'
+import { getRoomsChannel } from '../reducers/rooms'
 import { getRoomUsers } from '../reducers/roomUsers'
 import { camelize } from '../helpers/data'
 
@@ -22,12 +22,7 @@ export const viewRoom = (slug) => ({
   room: slug
 })
 
-const updateRooms = (rooms) => ({
-  type: 'UPDATE_ROOMS',
-  rooms: rooms
-})
-
-export const joinRooms = (onSuccess, onError) => (dispatch, getState) => {
+export const joinRoomsChannel = (onSuccess, onError) => (dispatch, getState) => {
   const key = 'rooms'
   const channelCallbacks = (channel) => {
     channel.on('room:subscriptions', (data) => {
@@ -44,7 +39,7 @@ export const joinRooms = (onSuccess, onError) => (dispatch, getState) => {
   return joinChannel(dispatch, getState, key, channelCallbacks, onSuccess, onError)
 }
 
-export const joinRoom = (slug, onSuccess, onError) => (dispatch, getState) => {
+export const joinRoomChannel = (slug, onSuccess, onError) => (dispatch, getState) => {
   const key = 'room:' + slug
   const channelCallbacks = (channel) => {
     channel.on('users:state', (data) => {
@@ -82,29 +77,6 @@ export const joinRoom = (slug, onSuccess, onError) => (dispatch, getState) => {
     channel.on('message:deleted', (data) => (
       dispatch(removeMessage(slug, camelize(data)))
     ))
-
-    return channel
-  }
-
-  return joinChannel(dispatch, getState, key, channelCallbacks, onSuccess, onError)
-}
-
-export const joinSupportRooms = (onSuccess, onError) => (dispatch, getState) => {
-  const key = 'support_rooms'
-  const channelCallbacks = (channel) => {
-    channel.on('support_rooms:state', (data) => {
-      const current = getRooms(getState())
-      const updated = Presence.syncState(current, data)
-
-      dispatch(updateRooms(updated))
-    })
-
-    channel.on('support_rooms:diff', (data) => {
-      const current = getRooms(getState())
-      const updated = Presence.syncDiff(current, data)
-
-      dispatch(updateRooms(updated))
-    })
 
     return channel
   }

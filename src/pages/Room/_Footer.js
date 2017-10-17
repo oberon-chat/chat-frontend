@@ -6,12 +6,12 @@ import EditMessage from '../Messages/_Edit'
 import NewMessage from '../Messages/_New'
 import { Button } from 'antd'
 
-const RoomFooter = ({ isSubscribed, joinRoom, messageId, room }) => {
+const RoomFooter = ({ createSubscription, isSubscribed, messageId, room }) => {
   const joinFooter = (
     <div className='chat-join-mesage-footer'>
       Viewing Room <strong>{room}</strong>
       {' '}
-      <Button onClick={joinRoom}>Join</Button>
+      <Button onClick={createSubscription}>Join</Button>
     </div>
   )
   const messageFooter = messageId
@@ -32,7 +32,7 @@ const mapStateToProps = (state, { room }) => ({
 })
 
 const mapDispatchToProps = (dispatch, { room }) => ({
-  joinRoom: () => dispatch(createRoomSubscription(room))
+  createSubscription: () => dispatch(createRoomSubscription(room))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomFooter)
