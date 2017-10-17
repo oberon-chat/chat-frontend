@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { map } from 'lodash'
+import { map, sortBy } from 'lodash'
 import moment from 'moment'
+import { title } from 'change-case'
 import { joinRooms } from '../../actions/rooms'
-import { getRooms } from '../../reducers/rooms'
+import { getRoomsByType } from '../../reducers/roomSubscriptions'
 import { getLastViewed } from '../../reducers/roomsMeta'
 import { meta } from '../../helpers/presence'
 import { newRoomPath } from '../../helpers/paths'
@@ -16,18 +17,18 @@ export class RoomsList extends Component {
   }
 
   render () {
-    const { rooms, lastViewed } = this.props
+    const { lastViewed, rooms, type } = this.props
 
-    const renderRoom = (room, slug) => {
+    const renderRoom = (room) => {
       const lastMessage = meta(room, 'last_message')
       const lastMessageAt = lastMessage ? moment(lastMessage.inserted_at).unix() : 0
-      const lastViewedAt = Math.floor((lastViewed(slug) || 0) / 1000)
+      const lastViewedAt = Math.floor((lastViewed(room) || 0) / 1000)
       const classes = lastMessageAt > lastViewedAt ? 'new-message' : ''
 
       return (
-        <li key={slug} className={classes}>
-          <Link to={'/rooms/' + slug}>
-            {slug}
+        <li key={room.slug} className={classes}>
+          <Link to={'/rooms/' + room.slug}>
+            {room.slug}
           </Link>
         </li>
       )
@@ -36,7 +37,7 @@ export class RoomsList extends Component {
     return (
       <div className='rooms-list-container'>
         <div className='chat-rooms-list-heading'>
-          <h3>Rooms</h3>
+          <h3>{title(type)} Rooms</h3>
           <Link className='chat-new-room-link' to={newRoomPath()}>
             <Icon type='plus-circle-o' />
           </Link>
@@ -49,9 +50,9 @@ export class RoomsList extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, { type }) => ({
   lastViewed: (key) => getLastViewed(state, key),
-  rooms: getRooms(state)
+  rooms: sortBy(getRoomsByType(state, type), (room) => room.slug)
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,4 +1,4 @@
-import { find, map } from 'lodash'
+import { filter, find, map } from 'lodash'
 
 const initialState = []
 
@@ -15,6 +15,7 @@ export const roomSubscriptionsReducer = (state = initialState, action) => {
 
 export const getSubscriptions = (state) => state.roomSubscriptions || []
 export const getRooms = (state) => map(getSubscriptions(state), (subscription) => subscription.room)
+export const getRoomsByType = (state, type) => filter(getRooms(state), (room) => room.type === type)
 export const getIsSubscribed = (state, slug) => find(getSubscriptions(state), (subscription) => subscription.room.slug === slug)
 
 export default roomSubscriptionsReducer

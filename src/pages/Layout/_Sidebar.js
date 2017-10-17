@@ -9,7 +9,9 @@ const Sidebar = ({ children }) => (
     </div>
     <UserDropdown />
     <div className='scroll-container'>
-      <RoomsList />
+      <RoomsList type='public' />
+      <RoomsList type='private' />
+      <RoomsList type='direct' />
       { children }
     </div>
   </div>

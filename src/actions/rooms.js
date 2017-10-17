@@ -30,20 +30,6 @@ const updateRooms = (rooms) => ({
 export const joinRooms = (onSuccess, onError) => (dispatch, getState) => {
   const key = 'rooms'
   const channelCallbacks = (channel) => {
-    channel.on('rooms:state', (data) => {
-      const current = getRooms(getState())
-      const updated = Presence.syncState(current, data)
-
-      dispatch(updateRooms(updated))
-    })
-
-    channel.on('rooms:diff', (data) => {
-      const current = getRooms(getState())
-      const updated = Presence.syncDiff(current, data)
-
-      dispatch(updateRooms(updated))
-    })
-
     channel.on('room:subscriptions', (data) => {
       dispatch(replaceRoomSubscriptions(camelize(data.subscriptions)))
     })
@@ -96,6 +82,29 @@ export const joinRoom = (slug, onSuccess, onError) => (dispatch, getState) => {
     channel.on('message:deleted', (data) => (
       dispatch(removeMessage(slug, camelize(data)))
     ))
+
+    return channel
+  }
+
+  return joinChannel(dispatch, getState, key, channelCallbacks, onSuccess, onError)
+}
+
+export const joinSupportRooms = (onSuccess, onError) => (dispatch, getState) => {
+  const key = 'support_rooms'
+  const channelCallbacks = (channel) => {
+    channel.on('support_rooms:state', (data) => {
+      const current = getRooms(getState())
+      const updated = Presence.syncState(current, data)
+
+      dispatch(updateRooms(updated))
+    })
+
+    channel.on('support_rooms:diff', (data) => {
+      const current = getRooms(getState())
+      const updated = Presence.syncDiff(current, data)
+
+      dispatch(updateRooms(updated))
+    })
 
     return channel
   }
