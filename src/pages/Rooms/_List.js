@@ -1,16 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { map, sortBy } from 'lodash'
+import { map } from 'lodash'
 import moment from 'moment'
-import { title } from 'change-case'
-import { getRoomsByType } from '../../reducers/roomSubscriptions'
 import { getLastViewed } from '../../reducers/roomsMeta'
 import { meta } from '../../helpers/presence'
 import { newRoomPath } from '../../helpers/paths'
 import { Icon } from 'antd'
 
-const RoomsList = ({ lastViewed, rooms, type }) => {
+const RoomsList = ({ lastViewed, rooms, title }) => {
   const renderRoom = (room) => {
     const lastMessage = meta(room, 'last_message')
     const lastMessageAt = lastMessage ? moment(lastMessage.inserted_at).unix() : 0
@@ -29,7 +27,7 @@ const RoomsList = ({ lastViewed, rooms, type }) => {
   return (
     <div className='rooms-list-container'>
       <div className='chat-rooms-list-heading'>
-        <h3>{title(type)} Rooms</h3>
+        <h3>{title}</h3>
         <Link className='chat-new-room-link' to={newRoomPath()}>
           <Icon type='plus-circle-o' />
         </Link>
@@ -42,8 +40,7 @@ const RoomsList = ({ lastViewed, rooms, type }) => {
 }
 
 const mapStateToProps = (state, { type }) => ({
-  lastViewed: (key) => getLastViewed(state, key),
-  rooms: sortBy(getRoomsByType(state, type), (room) => room.slug)
+  lastViewed: (key) => getLastViewed(state, key)
 })
 
 const mapDispatchToProps = () => ({

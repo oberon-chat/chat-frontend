@@ -1,3 +1,6 @@
+import { map } from 'lodash'
+import { metas } from '../helpers/presence'
+
 const initialState = {}
 
 export const supportRoomsReducer = (state = initialState, action) => {
@@ -9,7 +12,15 @@ export const supportRoomsReducer = (state = initialState, action) => {
   }
 }
 
-export const getSupportRooms = (state) => state.rooms || {}
-export const getSupportRoom = (state, key) => getSupportRooms(state)[key]
+export const getSupportRoomsPresence = (state) => state.supportRooms || {}
+export const getSupportRooms = (state) => (
+  map(state.supportRooms, (room) => metas(room))
+)
+export const getSupportRoom = (state, key) => {
+  const rooms = state.supportRooms || {}
+  const room = rooms[key]
+
+  return rooms ? metas(room) : {}
+}
 
 export default supportRoomsReducer

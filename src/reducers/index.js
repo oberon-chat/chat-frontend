@@ -28,5 +28,5 @@ export default combineReducers({
   roomUsers: roomUsersReducer,
   routing: routerReducer,
   socket: socketReducer,
-  supportRooms: supportRoomsReducer,
+  supportRooms: supportRoomsReducer
 })

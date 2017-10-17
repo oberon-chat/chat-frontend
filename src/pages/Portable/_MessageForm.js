@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { reset as resetForm } from 'redux-form'
 import { setActiveRoom } from '../../actions/portable'
-import { createRoom, joinRoomChannel, joinRoomChannels } from '../../actions/rooms'
+import { createRoom, joinRoomChannel, joinRoomsChannel } from '../../actions/rooms'
 import { submitMessage } from '../../actions/roomMessages'
 import MessagesForm from '../Messages/_Form'
 

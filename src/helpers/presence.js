@@ -1,1 +1,2 @@
-export const meta = (item, key) => ((item.metas || [])[0] || {})[key]
+export const metas = (item) => (item.metas || [])[0] || {}
+export const meta = (item, key) => metas(item)[key]
