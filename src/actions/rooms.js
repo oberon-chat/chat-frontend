@@ -39,6 +39,12 @@ export const joinRoomsChannel = (onSuccess, onError) => (dispatch, getState) => 
 export const joinRoomChannel = (slug, onSuccess, onError) => (dispatch, getState) => {
   const key = 'room:' + slug
   const channelCallbacks = (channel) => {
+    channel.on('room:subscriptions', (data) => {
+      // TODO: rename roomSubscriptions to userSubscriptions
+      // TODO: save room subscriptions
+      // dispatch(addRoomSubscription(camelize(data)))
+    })
+
     channel.on('room:subscription:created', (data) => {
       dispatch(addRoomSubscription(camelize(data)))
     })
