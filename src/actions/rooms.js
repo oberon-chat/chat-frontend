@@ -1,11 +1,8 @@
-import { Presence } from 'phoenix'
 import { reverse } from 'lodash'
 import { joinChannel } from './channels'
 import { addMessage, removeMessage, replaceMessage, replaceMessages } from './roomMessages'
 import { addRoomSubscription, replaceRoomSubscriptions } from './roomSubscriptions'
-import { updateRoomUsers } from './roomUsers'
 import { getRoomsChannel } from '../reducers/rooms'
-import { getRoomUsers } from '../reducers/roomUsers'
 import { camelize } from '../helpers/data'
 
 export const createRoom = (name, type, onSuccess, onError) => (dispatch, getState) => {
@@ -25,11 +22,11 @@ export const viewRoom = (slug) => ({
 export const joinRoomsChannel = (onSuccess, onError) => (dispatch, getState) => {
   const key = 'rooms'
   const channelCallbacks = (channel) => {
-    channel.on('room:subscriptions', (data) => {
+    channel.on('user:subscriptions', (data) => {
       dispatch(replaceRoomSubscriptions(camelize(data.subscriptions)))
     })
 
-    channel.on('room:subscribed', (data) => {
+    channel.on('user:subscriptions:created', (data) => {
       dispatch(addRoomSubscription(camelize(data)))
     })
 
@@ -42,21 +39,7 @@ export const joinRoomsChannel = (onSuccess, onError) => (dispatch, getState) => 
 export const joinRoomChannel = (slug, onSuccess, onError) => (dispatch, getState) => {
   const key = 'room:' + slug
   const channelCallbacks = (channel) => {
-    channel.on('users:state', (data) => {
-      const current = getRoomUsers(getState(), slug)
-      const users = Presence.syncState(current, data)
-
-      dispatch(updateRoomUsers(slug, users))
-    })
-
-    channel.on('users:diff', (data) => {
-      const current = getRoomUsers(getState(), slug)
-      const users = Presence.syncDiff(current, data)
-
-      dispatch(updateRoomUsers(slug, users))
-    })
-
-    channel.on('room:subscribed', (data) => {
+    channel.on('room:subscription:created', (data) => {
       dispatch(addRoomSubscription(camelize(data)))
     })
 

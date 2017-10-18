@@ -12,15 +12,15 @@ export const supportRoomsReducer = (state = initialState, action) => {
   }
 }
 
-export const getSupportRoomsPresence = (state) => state.supportRooms || {}
+export const getSupportRoomsPresence = (state) => state.supportRooms
 export const getSupportRooms = (state) => (
   map(state.supportRooms, (room) => metas(room))
 )
 export const getSupportRoom = (state, key) => {
-  const rooms = state.supportRooms || {}
-  const room = rooms[key]
+  const presence = state.supportRooms
+  const room = presence[key]
 
-  return rooms ? metas(room) : {}
+  return room ? metas(room) : {}
 }
 
 export default supportRoomsReducer

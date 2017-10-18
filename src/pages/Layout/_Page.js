@@ -4,7 +4,7 @@ import { fetchSocket } from '../../actions/socket'
 import { getIsLoggedIn } from '../../reducers/currentUser'
 import { joinRoomsChannel } from '../../actions/rooms'
 import { joinSupportRoomsChannel } from '../../actions/supportRooms'
-import { joinUsersChannel } from '../../actions/currentUser'
+import { joinUsersChannel } from '../../actions/users'
 import parallel from '../../helpers/parallel'
 import { Layout } from 'antd'
 

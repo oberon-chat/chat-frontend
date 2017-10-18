@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
-import { joinUsersChannel } from '../../actions/currentUser'
 import ConnectionError from '../../components/ConnectionError'
 import Sidebar from './_Sidebar'
 import Main from './_Main'
@@ -11,10 +9,6 @@ import Room from '../Room'
 import NewRoom from '../Rooms/New'
 
 class LoggedInRoutes extends Component {
-  componentDidMount () {
-    this.props.onLogIn()
-  }
-
   render () {
     return (
       <InvisibleContainer>
@@ -31,12 +25,4 @@ class LoggedInRoutes extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  onLogIn: () => dispatch(joinUsersChannel())
-})
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoggedInRoutes))
+export default withRouter(LoggedInRoutes)
