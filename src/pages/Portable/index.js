@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { closeChat, newChat, openChat, setActiveRoom } from '../../actions/portable'
 import { joinRoomChannel, joinRoomsChannel } from '../../actions/rooms'
+import { joinUsersChannel } from '../../actions/users'
 import { fetchSocket, socketClose } from '../../actions/socket'
 import { getActiveRoom, getHasRecentActivity, getIsOpen } from '../../reducers/portable'
 import { shortUuid } from '../../helpers/uuid'
@@ -115,8 +116,9 @@ const mapDispatchToProps = (dispatch) => {
       const onJoinRoomSuccess = () => dispatch(setActiveRoom(room))
       const onJoinRoomError = () => onNew()
       const afterJoinRooms = () => dispatch(joinRoomChannel(room, onJoinRoomSuccess, onJoinRoomError))
+      const afterJoinUsers = () => dispatch(joinRoomsChannel(afterJoinRooms))
 
-      afterFetch = () => dispatch(joinRoomsChannel(afterJoinRooms))
+      afterFetch = () => dispatch(joinUsersChannel(afterJoinUsers))
     }
 
     dispatch(fetchSocket(afterFetch))
