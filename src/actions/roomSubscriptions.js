@@ -1,17 +1,11 @@
-import { getRoomChannel } from '../reducers/rooms'
-
-export const createRoomSubscription = (slug) => (dispatch, getState) => {
-  const channel = getRoomChannel(getState(), slug)
-
-  return channel.push('room:subscribe')
-}
-
-export const addRoomSubscription = (subscription) => ({
+export const addRoomSubscription = (key, subscription) => ({
   type: 'ADD_ROOM_SUBSCRIPTION',
+  key: key,
   subscription: subscription
 })
 
-export const replaceRoomSubscriptions = (subscriptions) => ({
+export const replaceRoomSubscriptions = (key, subscriptions) => ({
   type: 'REPLACE_ROOM_SUBSCRIPTIONS',
+  key: key,
   subscriptions: subscriptions
 })

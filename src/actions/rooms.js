@@ -2,6 +2,7 @@ import { reverse } from 'lodash'
 import { joinChannel } from './channels'
 import { addMessage, removeMessage, replaceMessage, replaceMessages } from './roomMessages'
 import { addRoomSubscription, replaceRoomSubscriptions } from './roomSubscriptions'
+import { addUserSubscription, replaceUserSubscriptions } from './userSubscriptions'
 import { getRoomsChannel } from '../reducers/rooms'
 import { camelize } from '../helpers/data'
 
@@ -23,11 +24,11 @@ export const joinRoomsChannel = (onSuccess, onError) => (dispatch, getState) => 
   const key = 'rooms'
   const channelCallbacks = (channel) => {
     channel.on('user:subscriptions', (data) => {
-      dispatch(replaceRoomSubscriptions(camelize(data.subscriptions)))
+      dispatch(replaceUserSubscriptions(camelize(data.subscriptions)))
     })
 
-    channel.on('user:subscriptions:created', (data) => {
-      dispatch(addRoomSubscription(camelize(data)))
+    channel.on('user:subscription:created', (data) => {
+      dispatch(addUserSubscription(camelize(data)))
     })
 
     return channel
@@ -40,13 +41,15 @@ export const joinRoomChannel = (slug, onSuccess, onError) => (dispatch, getState
   const key = 'room:' + slug
   const channelCallbacks = (channel) => {
     channel.on('room:subscriptions', (data) => {
-      // TODO: rename roomSubscriptions to userSubscriptions
-      // TODO: save room subscriptions
-      // dispatch(addRoomSubscription(camelize(data)))
+      dispatch(replaceRoomSubscriptions(slug, camelize(data.subscriptions)))
     })
 
     channel.on('room:subscription:created', (data) => {
-      dispatch(addRoomSubscription(camelize(data)))
+      dispatch(addRoomSubscription(slug, camelize(data)))
+    })
+
+    channel.on('user:subscription:created', (data) => {
+      dispatch(addUserSubscription(camelize(data)))
     })
 
     channel.on('messages:list', (data) => {

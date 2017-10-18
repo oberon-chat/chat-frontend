@@ -1,17 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createRoomSubscription } from '../../actions/roomSubscriptions'
-import { getIsSubscribed } from '../../reducers/roomSubscriptions'
+import { createSubscription } from '../../actions/userSubscriptions'
+import { getIsSubscribed } from '../../reducers/userSubscriptions'
 import EditMessage from '../Messages/_Edit'
 import NewMessage from '../Messages/_New'
 import { Button } from 'antd'
 
-const RoomFooter = ({ createSubscription, isSubscribed, messageId, room }) => {
+const RoomFooter = ({ isSubscribed, joinRoom, messageId, room }) => {
   const joinFooter = (
     <div className='chat-join-mesage-footer'>
       Viewing Room <strong>{room}</strong>
       {' '}
-      <Button onClick={createSubscription}>Join</Button>
+      <Button onClick={joinRoom}>Join</Button>
     </div>
   )
   const messageFooter = messageId
@@ -32,7 +32,7 @@ const mapStateToProps = (state, { room }) => ({
 })
 
 const mapDispatchToProps = (dispatch, { room }) => ({
-  createSubscription: () => dispatch(createRoomSubscription(room))
+  joinRoom: () => dispatch(createSubscription(room))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomFooter)

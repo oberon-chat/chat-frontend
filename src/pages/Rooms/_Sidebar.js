@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { sortBy } from 'lodash'
-import { getRoomsByType } from '../../reducers/roomSubscriptions'
+import { getRoomsByType } from '../../reducers/userSubscriptions'
 import { getSupportRooms } from '../../reducers/supportRooms'
 import RoomsList from './_List'
 

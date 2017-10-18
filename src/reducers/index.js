@@ -11,9 +11,9 @@ import roomsReducer from './rooms'
 import roomsMetaReducer from './roomsMeta'
 import roomMessagesReducer from './roomMessages'
 import roomSubscriptionsReducer from './roomSubscriptions'
-import roomUsersReducer from './roomUsers'
 import socketReducer from './socket'
 import supportRoomsReducer from './supportRooms'
+import userSubscriptionsReducer from './userSubscriptions'
 
 export default combineReducers({
   client: clientReducer,
@@ -27,8 +27,8 @@ export default combineReducers({
   roomsMeta: roomsMetaReducer,
   roomMessages: roomMessagesReducer,
   roomSubscriptions: roomSubscriptionsReducer,
-  roomUsers: roomUsersReducer,
   routing: routerReducer,
   socket: socketReducer,
-  supportRooms: supportRoomsReducer
+  supportRooms: supportRoomsReducer,
+  userSubscriptions: userSubscriptionsReducer
 })

@@ -1,21 +1,25 @@
-import { filter, find, map } from 'lodash'
+import { map } from 'lodash'
 
-const initialState = []
+const initialState = {}
 
 export const roomSubscriptionsReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_ROOM_SUBSCRIPTION':
-      return state.concat(action.subscription)
+      return {
+        ...state,
+        [action.key]: state[action.key].concat(action.subscription)
+      }
     case 'REPLACE_ROOM_SUBSCRIPTIONS':
-      return action.subscriptions
+      return {
+        ...state,
+        [action.key]: action.subscriptions
+      }
     default:
       return state
   }
 }
 
-export const getSubscriptions = (state) => state.roomSubscriptions || []
-export const getRooms = (state) => map(getSubscriptions(state), (subscription) => subscription.room)
-export const getRoomsByType = (state, type) => filter(getRooms(state), (room) => room.type === type)
-export const getIsSubscribed = (state, slug) => find(getSubscriptions(state), (subscription) => subscription.room.slug === slug)
+export const getSubscriptions = (state, key) => state.roomSubscriptions[key] || []
+export const getUsers = (state, key) => map(getSubscriptions(state, key), (subscription) => subscription.user)
 
 export default roomSubscriptionsReducer
