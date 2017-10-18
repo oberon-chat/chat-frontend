@@ -22,6 +22,6 @@ export const getConnectedUser = (state, id) => {
 
   return user ? metas(user) : {}
 }
-export const getIsConnected = (state, id) => console.log(state.connectedUsers, id) || !!state.connectedUsers[id]
+export const getIsConnected = (state, id) => !!state.connectedUsers[id]
 
 export default connectedUsersReducer
