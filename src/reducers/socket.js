@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash'
+
 const initialState = {
   connected: false,
   connection: null,
@@ -37,7 +39,7 @@ export const withSocketConnection = (getState, callback, attempt = 0, throwOnErr
     const state = getState()
     const socket = state.socket.connection
 
-    if (socket) {
+    if (!isEmpty(socket)) {
       return callback(socket)
     } else {
       return withSocketConnection(getState, callback, attempt + 1)

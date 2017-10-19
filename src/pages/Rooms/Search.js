@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { sortBy, values } from 'lodash'
 import { getFormValues, Field, reduxForm, reset as resetForm } from 'redux-form'
-import { fetchPublicRooms } from '../../actions/publicRooms'
 import { getPublicRooms } from '../../reducers/publicRooms'
 import { getSupportRooms } from '../../reducers/supportRooms'
 import { searchRooms } from '../../helpers/search'
@@ -19,43 +18,33 @@ const SearchInput = (props) => (
   />
 )
 
-class SearchRooms extends Component {
-  componentDidMount () {
-    this.props.handleLoad()
-  }
-
-  render() {
-    const { matches } = this.props
-
-    return (
-      <Main>
-        <Header>
-          <h2>Rooms</h2>
-        </Header>
-        <Content classes='padded'>
-          <div className='chat-search-rooms'>
-            <Form layout='inline'>
-              <p>{matches.length} Rooms</p>
-              <Form.Item>
-                <Field name='search' component={SearchInput} />
-              </Form.Item>
-            </Form>
-            <RoomsList rooms={matches} />
-          </div>
-        </Content>
-      </Main>
-    )
-  }
-}
+const SearchRooms = ({ matches }) => (
+  <Main>
+    <Header>
+      <h2>Rooms</h2>
+    </Header>
+    <Content classes='padded'>
+      <div className='chat-search-rooms'>
+        <Form layout='inline'>
+          <p>{matches.length} Rooms</p>
+          <Form.Item>
+            <Field name='search' component={SearchInput} />
+          </Form.Item>
+        </Form>
+        <RoomsList rooms={matches} />
+      </div>
+    </Content>
+  </Main>
+)
 
 const ReduxForm = reduxForm()(SearchRooms)
 
 const mapStateToProps = (state) => {
+  const form = 'searchRoomsForm'
+  const formData = getFormValues(form)(state) || {}
   const publicRooms = values(getPublicRooms(state))
   const supportRooms = getSupportRooms(state)
   const rooms = sortBy(publicRooms.concat(supportRooms), 'slug')
-  const form = 'searchRoomsForm'
-  const formData = getFormValues(form)(state) || {}
   const matches = searchRooms(rooms, formData.search)
 
   return {
@@ -65,8 +54,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClear: () => dispatch(resetForm('createRoomForm')),
-  handleLoad: () => true //dispatch(fetchPublicRooms())
+  handleClear: () => dispatch(resetForm('createRoomForm'))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxForm)

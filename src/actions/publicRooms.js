@@ -1,14 +1,14 @@
-import { getRoomsChannel } from '../reducers/rooms'
+import { withChannel } from '../reducers/channels'
 import { camelize, listToObject } from '../helpers/data'
 
-export const fetchPublicRooms = (slug, message) => (dispatch, getState) => {
-  const channel = getRoomsChannel(getState())
-
-  return channel
-    .push('rooms:public')
-    .receive('ok', (data) => (
-      dispatch(replacePublicRooms(data.rooms))
-    ))
+export const fetchPublicRooms = () => (dispatch, getState) => {
+  return withChannel(getState, 'rooms', (channel) => {
+    return channel
+      .push('rooms:public')
+      .receive('ok', (data) => (
+        dispatch(replacePublicRooms(data.rooms))
+      ))
+  })
 }
 
 export const replacePublicRooms = (values) => {
