@@ -2,7 +2,7 @@ import { reverse } from 'lodash'
 import { joinChannel } from './channels'
 import { addMessage, removeMessage, replaceMessage, replaceMessages } from './roomMessages'
 import { addRoomSubscription, replaceRoomSubscriptions } from './roomSubscriptions'
-import { addUserSubscription, replaceUserSubscriptions } from './userSubscriptions'
+import { addUserSubscription, joinAllRoomChannels, replaceUserSubscriptions } from './userSubscriptions'
 import { getRoomsChannel } from '../reducers/rooms'
 import { camelize } from '../helpers/data'
 
@@ -25,10 +25,12 @@ export const joinRoomsChannel = (onSuccess, onError) => (dispatch, getState) => 
   const channelCallbacks = (channel) => {
     channel.on('user:subscriptions', (data) => {
       dispatch(replaceUserSubscriptions(camelize(data.subscriptions)))
+      dispatch(joinAllRoomChannels())
     })
 
     channel.on('user:subscription:created', (data) => {
       dispatch(addUserSubscription(camelize(data)))
+      dispatch(joinAllRoomChannels())
     })
 
     return channel
@@ -50,6 +52,7 @@ export const joinRoomChannel = (slug, onSuccess, onError) => (dispatch, getState
 
     channel.on('user:subscription:created', (data) => {
       dispatch(addUserSubscription(camelize(data)))
+      dispatch(joinAllRoomChannels())
     })
 
     channel.on('messages:list', (data) => {
