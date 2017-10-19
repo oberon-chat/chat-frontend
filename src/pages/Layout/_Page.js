@@ -15,6 +15,12 @@ class Page extends Component {
     }
   }
 
+  componentWillReceiveProps (next) {
+    if (!this.props.isLoggedIn && next.isLoggedIn) {
+      this.props.handleLogin()
+    }
+  }
+
   render () {
     const { children } = this.props
 

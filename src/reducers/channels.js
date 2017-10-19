@@ -1,3 +1,5 @@
+import { map, omit } from 'lodash'
+
 const initialState = {}
 
 export const channelsReducer = (state = initialState, action) => {
@@ -8,10 +10,13 @@ export const channelsReducer = (state = initialState, action) => {
         [action.key]: action.channel
       }
     case 'CHANNEL_LEAVE':
-      delete state[action.key]
-      return state
+      state[action.key].leave()
+
+      return omit(state, action.key)
     case 'CURRENT_USER_LOGOUT':
     case 'SOCKET_CLOSE':
+      map(state, (channel) => channel.leave())
+
       return initialState
     default:
       return state
