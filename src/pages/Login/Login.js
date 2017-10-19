@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { logIn as logInCurrentUser } from '../../actions/currentUser'
-import { fetchSocket } from '../../actions/socket'
 import { getIsLoggedIn } from '../../reducers/currentUser'
 import history from '../../app/history'
 import ApolloClient from '../../components/ApolloClient'
@@ -71,7 +70,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   logInToClient: (data) => {
     dispatch(logInCurrentUser(data))
-    dispatch(fetchSocket())
   }
 })
 

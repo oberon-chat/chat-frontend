@@ -4,7 +4,6 @@ import { compose, graphql } from 'react-apollo'
 import { logInWithProvider } from '../../api/session'
 import history from '../../app/history'
 import { logIn as logInCurrentUser } from '../../actions/currentUser'
-import { fetchSocket } from '../../actions/socket'
 import { getIsLoggedIn } from '../../reducers/currentUser'
 import { queryString } from '../../helpers/paths'
 import Page from '../../components/Page'
@@ -55,7 +54,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   logInToClient: (data) => {
     dispatch(logInCurrentUser(data))
-    dispatch(fetchSocket())
   }
 })
 
