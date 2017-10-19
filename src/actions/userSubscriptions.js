@@ -20,7 +20,6 @@ export const replaceUserSubscriptions = (subscriptions) => ({
 })
 
 export const joinAllRoomChannels = () => (dispatch, getState) => {
-  // Note: joinRoomChannel will noop if channel is already connected.
   const rooms = getRooms(getState())
   const join = (room) => dispatch(joinRoomChannel(room.slug))
 

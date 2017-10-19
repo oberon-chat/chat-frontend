@@ -5,6 +5,7 @@ import { joinRoomChannel, joinRoomsChannel } from '../../actions/rooms'
 import { joinUsersChannel } from '../../actions/users'
 import { fetchSocket, socketClose } from '../../actions/socket'
 import { getActiveRoom, getHasRecentActivity, getIsOpen } from '../../reducers/portable'
+import { getIsConnected } from '../../reducers/socket'
 import { shortUuid } from '../../helpers/uuid'
 import ConnectionError from '../../components/ConnectionError'
 import MessagesList from '../Messages/_List'
@@ -64,6 +65,14 @@ class Portable extends Component {
     this.props.onLoad(room, isActive)
   }
 
+  componentWillReceiveProps (next) {
+    const isReconnect = (this.props.isConnected === false && next.isConnected === true)
+
+    if (isReconnect) {
+      this.props.onLoad(next.room, next.isActive)
+    }
+  }
+
   render () {
     const { isActive, isClosed, onClose, onNew, onOpen, room } = this.props
     const classnames = 'chat-portable ' + (isClosed ? 'closed' : 'open')
@@ -97,6 +106,7 @@ const mapStateToProps = (state) => {
   return {
     isActive: isActive,
     isClosed: !getIsOpen(state),
+    isConnected: getIsConnected(state),
     room: isActive ? activeRoom : newRoom
   }
 }

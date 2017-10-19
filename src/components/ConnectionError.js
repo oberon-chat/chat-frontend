@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import history from '../app/history'
 import { createFlashMessage } from '../actions/flashMessages'
 import { logOut } from '../actions/currentUser'
-import { isConnected } from '../reducers/socket'
+import { getIsConnected } from '../reducers/socket'
 import { isClientType } from '../reducers/client'
 import { Button } from 'antd'
 
-const ConnectionError = ({ connected, flashMessage, isPortable, onLogOut }) => {
-  if (connected) {
+const ConnectionError = ({ flashMessage, isConnected, isPortable, onLogOut }) => {
+  if (isConnected) {
     return null
   }
 
@@ -39,7 +39,7 @@ const ConnectionError = ({ connected, flashMessage, isPortable, onLogOut }) => {
 }
 
 const mapStateToProps = (state) => ({
-  connected: isConnected(state),
+  isConnected: getIsConnected(state),
   isPortable: isClientType(state, 'portable')
 })
 

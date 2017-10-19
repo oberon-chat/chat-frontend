@@ -20,7 +20,7 @@ const socketReducer = (state = initialState, action) => {
 
 export const getSocket = (state) => state.socket
 export const getSocketConnection = (state) => state.socket.connection
-export const isConnected = (state) => state.socket.connected
+export const getIsConnected = (state) => state.socket.connected
 export const withSocketConnection = (getState, callback, attempt = 0, throwOnError = false) => {
   const interval = 25
   const max = Math.ceil(5000 / interval)

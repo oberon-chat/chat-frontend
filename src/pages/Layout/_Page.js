@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchSocket } from '../../actions/socket'
-import { getIsLoggedIn } from '../../reducers/currentUser'
 import { joinRoomsChannel } from '../../actions/rooms'
 import { joinSupportRoomsChannel } from '../../actions/supportRooms'
 import { joinUsersChannel } from '../../actions/users'
+import { getIsLoggedIn } from '../../reducers/currentUser'
+import { getIsConnected } from '../../reducers/socket'
 import parallel from '../../helpers/parallel'
 import { Layout } from 'antd'
 
@@ -16,7 +17,13 @@ class Page extends Component {
   }
 
   componentWillReceiveProps (next) {
+    const isReconnect = (this.props.isConnected === false && next.isConnected === true)
+
     if (!this.props.isLoggedIn && next.isLoggedIn) {
+      this.props.handleLogin()
+    }
+
+    if (next.isLoggedIn && isReconnect) {
       this.props.handleLogin()
     }
   }
@@ -33,6 +40,7 @@ class Page extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  isConnected: getIsConnected(state),
   isLoggedIn: getIsLoggedIn(state)
 })
 
