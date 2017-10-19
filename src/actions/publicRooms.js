@@ -11,6 +11,11 @@ export const fetchPublicRooms = () => (dispatch, getState) => {
   })
 }
 
+export const addPublicRoom = (room) => ({
+  type: 'ADD_PUBLIC_ROOM',
+  room: camelize(room)
+})
+
 export const replacePublicRooms = (values) => {
   const cased = camelize(values)
   const asObject = listToObject(cased, 'slug')

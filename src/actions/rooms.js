@@ -1,6 +1,6 @@
 import { reverse } from 'lodash'
 import { joinChannel } from './channels'
-import { replacePublicRooms } from './publicRooms'
+import { addPublicRoom, replacePublicRooms } from './publicRooms'
 import { addMessage, removeMessage, replaceMessage, replaceMessages } from './roomMessages'
 import { addRoomSubscription, replaceRoomSubscriptions } from './roomSubscriptions'
 import { addUserSubscription, joinAllRoomChannels } from './userSubscriptions'
@@ -31,6 +31,10 @@ export const joinRoomsChannel = (onSuccess, onError) => (dispatch, getState) => 
 
     channel.on('rooms:public', (data) => {
       dispatch(replacePublicRooms(data.rooms))
+    })
+
+    channel.on('rooms:public:created', (data) => {
+      dispatch(addPublicRoom(data))
     })
 
     return channel
