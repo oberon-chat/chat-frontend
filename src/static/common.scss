@@ -116,7 +116,6 @@
     z-index: 2000;
   }
 
-
   /* Layout */
 
   .section {
@@ -127,10 +126,16 @@
 
   /* Sidebar */
 
-  ul.rooms-list {
+  .chat-sidebar-rooms-list-container {
+    h3 a {
+      color: rgba(0, 0, 0, 0.85);
+    }
 
-    li.new-message {
-      font-weight: 600;
+    ul.chat-sidebar-rooms-list {
+
+      li.new-message {
+        font-weight: 600;
+      }
     }
   }
 

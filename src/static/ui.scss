@@ -86,12 +86,35 @@ body {
       }
     }
 
-    .rooms-list-container {
+    .chat-sidebar-rooms-list-container {
       margin: 15px 0;
     }
   }
 
   /* Content */
+
+  .chat-search-rooms {
+    width: 100%;
+
+    .chat-rooms-list-container {
+      height: 100%;
+      width: 100%;
+
+      ul.chat-rooms-list {
+        width: 100%;
+
+        li {
+          border: 1px solid #eee;
+          border-radius: 5px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin: 5px 0;
+          padding: 15px;
+        }
+      }
+    }
+  }
 
   .message-list {
     padding: 0 0 0 16px;

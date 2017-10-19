@@ -10,14 +10,14 @@ const updateSupportRooms = (rooms) => ({
 export const joinSupportRoomsChannel = (onSuccess, onError) => (dispatch, getState) => {
   const key = 'support_rooms'
   const channelCallbacks = (channel) => {
-    channel.on('support_rooms:state', (data) => {
+    channel.on('rooms:support:state', (data) => {
       const current = getSupportRoomsPresence(getState())
       const updated = Presence.syncState(current, data)
 
       dispatch(updateSupportRooms(updated))
     })
 
-    channel.on('support_rooms:diff', (data) => {
+    channel.on('rooms:support:diff', (data) => {
       const current = getSupportRoomsPresence(getState())
       const updated = Presence.syncDiff(current, data)
 

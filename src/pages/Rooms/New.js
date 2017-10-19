@@ -15,4 +15,6 @@ const NewRoom = () => (
   </Main>
 )
 
+NewRoom.displayName = 'NewRoom'
+
 export default NewRoom

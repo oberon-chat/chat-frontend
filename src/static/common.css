@@ -90,7 +90,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between; }
-  #chat-root ul.rooms-list li.new-message {
+  #chat-root .chat-sidebar-rooms-list-container h3 a {
+    color: rgba(0, 0, 0, 0.85); }
+  #chat-root .chat-sidebar-rooms-list-container ul.chat-sidebar-rooms-list li.new-message {
     font-weight: 600; }
   #chat-root .connection-error {
     background: #fff;

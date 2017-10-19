@@ -7,6 +7,7 @@ import InvisibleContainer from '../../components/InvisibleContainer'
 
 import Room from '../Room'
 import NewRoom from '../Rooms/New'
+import SearchRoom from '../Rooms/Search'
 
 class LoggedInRoutes extends Component {
   render () {
@@ -15,7 +16,8 @@ class LoggedInRoutes extends Component {
         <ConnectionError />
         <Sidebar />
         <Switch>
-          <Route path={'/rooms/new'} component={NewRoom} />
+          <Route path={'/new-room'} component={NewRoom} />
+          <Route path={'/search-rooms'} component={SearchRoom} />
           <Route path={'/rooms/:room/messages/:messageId/edit'} component={Room} />
           <Route path={'/rooms/:room'} component={Room} />
           <Route component={Main} />

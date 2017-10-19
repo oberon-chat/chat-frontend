@@ -3,15 +3,15 @@ import { connect } from 'react-redux'
 import { sortBy } from 'lodash'
 import { getRoomsByType } from '../../reducers/userSubscriptions'
 import { getSupportRooms } from '../../reducers/supportRooms'
-import RoomsList from './_List'
+import SidebarRoomsList from './_SidebarList'
 
 const RoomsSidebar = ({ rooms }) => {
   return (
     <div id='rooms-sidebar'>
-      <RoomsList title='Support Rooms' rooms={rooms.support} />
-      <RoomsList title='Public Rooms' rooms={rooms.public} />
-      <RoomsList title='Private Rooms' rooms={rooms.private} />
-      <RoomsList title='Direct Messages' rooms={rooms.direct} />
+      <SidebarRoomsList title='Support Rooms' rooms={rooms.support} />
+      <SidebarRoomsList title='Public Rooms' rooms={rooms.public} />
+      <SidebarRoomsList title='Private Rooms' rooms={rooms.private} />
+      <SidebarRoomsList title='Direct Messages' rooms={rooms.direct} />
     </div>
   )
 }

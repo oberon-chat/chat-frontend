@@ -7,6 +7,7 @@ import connectedUsersReducer from './connectedUsers'
 import currentUserReducer from './currentUser'
 import flashMessagesReducer from './flashMessages'
 import portableReducer from './portable'
+import publicRoomsReducer from './publicRooms'
 import roomsReducer from './rooms'
 import roomsMetaReducer from './roomsMeta'
 import roomMessagesReducer from './roomMessages'
@@ -23,6 +24,7 @@ export default combineReducers({
   flashMessages: flashMessagesReducer,
   form: reduxFormReducer,
   portable: portableReducer,
+  publicRooms: publicRoomsReducer,
   rooms: roomsReducer,
   roomsMeta: roomsMetaReducer,
   roomMessages: roomMessagesReducer,

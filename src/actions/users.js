@@ -2,7 +2,9 @@ import { Presence } from 'phoenix'
 import { joinChannel } from './channels'
 import { replaceConnectedUsers } from './connectedUsers'
 import { updateCurrentUser } from './currentUser'
+import { joinAllRoomChannels, replaceUserSubscriptions } from './userSubscriptions'
 import { getConnectedUsersPresence } from '../reducers/connectedUsers'
+import { camelize } from '../helpers/data'
 
 export const joinUsersChannel = (onSuccess, onError) => (dispatch, getState) => {
   const key = 'users'
@@ -21,8 +23,13 @@ export const joinUsersChannel = (onSuccess, onError) => (dispatch, getState) => 
       dispatch(replaceConnectedUsers(users))
     })
 
-    channel.on('users:connected:current', (data) => {
+    channel.on('user:current', (data) => {
       dispatch(updateCurrentUser(data))
+    })
+
+    channel.on('user:current:subscriptions', (data) => {
+      dispatch(replaceUserSubscriptions(camelize(data.subscriptions)))
+      dispatch(joinAllRoomChannels())
     })
 
     return channel

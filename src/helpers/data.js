@@ -6,9 +6,9 @@ const camelizeList = (data) => map(data, (item) => camelizeObject(item))
 
 export const camelize = (data) => isArray(data) ? camelizeList(data) : camelizeObject(data)
 
-export const listToObject = (list) => (
+export const listToObject = (list, key='id') => (
   reduce(list, (acc, item) => {
-    acc[item.id] = item
+    acc[item[key]] = item
 
     return acc
   }, {})
