@@ -24,17 +24,17 @@ export const viewRoom = (slug) => ({
 export const joinRoomsChannel = (onSuccess, onError) => (dispatch, getState) => {
   const key = 'rooms'
   const channelCallbacks = (channel) => {
-    channel.on('user:subscription:created', (data) => {
-      dispatch(addUserSubscription(camelize(data)))
-      dispatch(joinAllRoomChannels())
-    })
-
     channel.on('rooms:public', (data) => {
       dispatch(replacePublicRooms(data.rooms))
     })
 
     channel.on('rooms:public:created', (data) => {
       dispatch(addPublicRoom(data))
+    })
+
+    channel.on('user:subscription:created', (data) => {
+      dispatch(addUserSubscription(camelize(data)))
+      dispatch(joinAllRoomChannels())
     })
 
     return channel
