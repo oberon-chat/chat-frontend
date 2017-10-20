@@ -5,10 +5,9 @@ import { map } from 'lodash'
 import moment from 'moment'
 import { getLastViewed } from '../../reducers/roomsMeta'
 import { meta } from '../../helpers/presence'
-import { newRoomPath, searchRoomsPath } from '../../helpers/paths'
 import { Icon } from 'antd'
 
-const RoomsSidebarList = ({ lastViewed, rooms, title }) => {
+const RoomsSidebarList = ({ lastViewed, newLink, rooms, title, titleLink }) => {
   const renderRoom = (room) => {
     const lastMessage = meta(room, 'last_message')
     const lastMessageAt = lastMessage ? moment(lastMessage.inserted_at).unix() : 0
@@ -28,13 +27,15 @@ const RoomsSidebarList = ({ lastViewed, rooms, title }) => {
     <div className='chat-sidebar-rooms-list-container'>
       <div className='chat-rooms-list-heading'>
         <h3>
-          <Link to={searchRoomsPath()}>
+          <Link to={titleLink}>
             {title}
           </Link>
         </h3>
-        <Link className='chat-new-room-link' to={newRoomPath()}>
-          <Icon type='plus-circle-o' />
-        </Link>
+        {newLink &&
+          <Link className='chat-new-room-link' to={newLink}>
+            <Icon type='plus-circle-o' />
+          </Link>
+        }
       </div>
       <ul className='chat-sidebar-rooms-list'>
         { map(rooms, renderRoom) }

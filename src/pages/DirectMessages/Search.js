@@ -24,7 +24,7 @@ const SearchRooms = ({ matches }) => (
       <h2>Rooms</h2>
     </Header>
     <Content classes='padded'>
-      <div className='chat-search'>
+      <div className='chat-search-rooms'>
         <Form layout='inline'>
           <p>{matches.length} Rooms</p>
           <Form.Item>
@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClear: () => dispatch(resetForm('searchRoomsForm'))
+  handleClear: () => dispatch(resetForm('createRoomForm'))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxForm)

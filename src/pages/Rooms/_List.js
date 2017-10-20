@@ -17,8 +17,8 @@ const RoomsList = ({ rooms }) => {
   }
 
   return (
-    <div className='chat-rooms-list-container scroll-container'>
-      <ul className='chat-rooms-list'>
+    <div className='chat-resource-list-container scroll-container'>
+      <ul className='chat-resource-list'>
         { map(rooms, renderRoom) }
       </ul>
     </div>

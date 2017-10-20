@@ -93,25 +93,25 @@ body {
 
   /* Content */
 
-  .chat-search-rooms {
+  .chat-search {
+    width: 100%;
+  }
+
+  .chat-resource-list-container {
+    height: 100%;
     width: 100%;
 
-    .chat-rooms-list-container {
-      height: 100%;
+    ul.chat-resource-list {
       width: 100%;
 
-      ul.chat-rooms-list {
-        width: 100%;
-
-        li {
-          border: 1px solid #eee;
-          border-radius: 5px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin: 5px 0;
-          padding: 15px;
-        }
+      li {
+        border: 1px solid #eee;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 5px 0;
+        padding: 15px;
       }
     }
   }

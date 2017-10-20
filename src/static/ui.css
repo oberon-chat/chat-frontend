@@ -59,21 +59,21 @@ body {
       color: rgba(0, 0, 0, 0.85); }
   #chat-root #sidebar .chat-sidebar-rooms-list-container {
     margin: 15px 0; }
-  #chat-root .chat-search-rooms {
+  #chat-root .chat-search {
     width: 100%; }
-    #chat-root .chat-search-rooms .chat-rooms-list-container {
-      height: 100%;
+  #chat-root .chat-resource-list-container {
+    height: 100%;
+    width: 100%; }
+    #chat-root .chat-resource-list-container ul.chat-resource-list {
       width: 100%; }
-      #chat-root .chat-search-rooms .chat-rooms-list-container ul.chat-rooms-list {
-        width: 100%; }
-        #chat-root .chat-search-rooms .chat-rooms-list-container ul.chat-rooms-list li {
-          border: 1px solid #eee;
-          border-radius: 5px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin: 5px 0;
-          padding: 15px; }
+      #chat-root .chat-resource-list-container ul.chat-resource-list li {
+        border: 1px solid #eee;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 5px 0;
+        padding: 15px; }
   #chat-root .message-list {
     padding: 0 0 0 16px; }
   #chat-root .message {
