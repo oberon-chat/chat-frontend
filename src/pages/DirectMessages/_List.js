@@ -4,7 +4,6 @@ import { map } from 'lodash'
 import { Button } from 'antd'
 
 const UsersList = ({ onCreate, users }) => {
-
   const renderUser = (user) => {
     return (
       <li key={user.id}>

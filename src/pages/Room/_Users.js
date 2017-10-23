@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { map, reduce, sortBy } from 'lodash'
 import { getIsConnected } from '../../reducers/connectedUsers'
 import { getUsers } from '../../reducers/roomSubscriptions'
-import StatusDot from '../../components/StatusDot'
+import UserConnectivityDot from '../Users/_ConnectivityDot'
 
 export const RoomUsers = ({ users }) => (
   <div className='scroll-container'>
@@ -11,7 +11,7 @@ export const RoomUsers = ({ users }) => (
     <ul>
       { map(users, (user) => (
         <li key={user.id}>
-          <StatusDot color={user.connected ? '#6ad439' : '#aaa'} />
+          <UserConnectivityDot isConnected={user.isConnected} />
           { user.name }
         </li>
       ))}
@@ -25,10 +25,10 @@ const mapStateToProps = (state, { room }) => {
   const users = getUsers(state, room)
   const grouped = reduce(users, (acc, user) => {
     if (getIsConnected(state, user.id)) {
-      user.connected = true
+      user.isConnected = true
       acc.connected.push(user)
     } else {
-      user.connected = false
+      user.isConnected = false
       acc.disconnected.push(user)
     }
 

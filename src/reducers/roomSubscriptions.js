@@ -1,4 +1,4 @@
-import { map } from 'lodash'
+import { find, isEmpty, map } from 'lodash'
 
 const initialState = {}
 
@@ -21,5 +21,10 @@ export const roomSubscriptionsReducer = (state = initialState, action) => {
 
 export const getSubscriptions = (state, key) => state.roomSubscriptions[key] || []
 export const getUsers = (state, key) => map(getSubscriptions(state, key), (subscription) => subscription.user)
+export const getDirectMessageUser = (state, key, currentUser) => {
+  const user = find(getUsers(state, key), (user) => user.id !== currentUser.id)
+
+  return isEmpty(user) ? {} : user
+}
 
 export default roomSubscriptionsReducer
