@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch, { room }) => ({
     }
 
     const onError = () => {
-      notification('Error creating room ' + room, 'error')
+      notification('Error creating room ' + data.name, 'error')
     }
 
     await dispatch(createRoom(data.name, data.type, onSuccess, onError))

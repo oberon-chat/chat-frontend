@@ -31,6 +31,7 @@ const RoomsSidebar = ({ rooms }) => {
         titleLink={newDirectMessagePath()}
         newLink={newDirectMessagePath()}
         rooms={rooms.direct}
+        displayRoom={(room) => room.name}
       />
     </div>
   )

@@ -7,7 +7,7 @@ import { getLastViewed } from '../../reducers/roomsMeta'
 import { meta } from '../../helpers/presence'
 import { Icon } from 'antd'
 
-const RoomsSidebarList = ({ lastViewed, newLink, rooms, title, titleLink }) => {
+const RoomsSidebarList = ({ displayRoom, lastViewed, newLink, rooms, title, titleLink }) => {
   const renderRoom = (room) => {
     const lastMessage = meta(room, 'last_message')
     const lastMessageAt = lastMessage ? moment(lastMessage.inserted_at).unix() : 0
@@ -17,7 +17,7 @@ const RoomsSidebarList = ({ lastViewed, newLink, rooms, title, titleLink }) => {
     return (
       <li key={room.slug} className={classes}>
         <Link to={'/rooms/' + room.slug}>
-          {room.slug}
+          {displayRoom ? displayRoom(room) : room.slug}
         </Link>
       </li>
     )
