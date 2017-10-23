@@ -4,7 +4,7 @@ import { map, sortBy } from 'lodash'
 import { getIsConnected } from '../../reducers/connectedUsers'
 import { getCurrentUser } from '../../reducers/currentUser'
 import { getDirectMessageUser } from '../../reducers/roomSubscriptions'
-import { getRoomsByType } from '../../reducers/userSubscriptions'
+import { getOpenRoomsByType, getRoomsByType } from '../../reducers/userSubscriptions'
 import { getSupportRooms } from '../../reducers/supportRooms'
 import { newDirectMessagePath, newRoomPath, searchRoomsPath } from '../../helpers/paths'
 import InvisibleContainer from '../../components/InvisibleContainer'
@@ -51,7 +51,7 @@ const RoomsSidebar = ({ rooms }) => {
 
 const mapStateToProps = (state) => {
   const currentUser = getCurrentUser(state)
-  const directMessages = map(getRoomsByType(state, 'direct'), (room) => {
+  const directMessages = map(getOpenRoomsByType(state, 'direct'), (room) => {
     room.directMessageUser = getDirectMessageUser(state, room.slug, currentUser)
     room.directMessageUser.isConnected = getIsConnected(state, room.directMessageUser.id)
 
