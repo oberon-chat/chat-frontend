@@ -16,7 +16,7 @@ const RoomsSidebarList = ({ displayRoom, lastViewed, newLink, rooms, title, titl
 
     return (
       <li key={room.slug} className={classes}>
-        <Link to={'/rooms/' + room.slug}>
+        <Link className='chat-room-link' to={'/rooms/' + room.slug}>
           {displayRoom ? displayRoom(room) : room.slug}
         </Link>
       </li>

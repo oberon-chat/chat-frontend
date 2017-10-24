@@ -3,10 +3,22 @@ import { joinRoomChannel } from './rooms'
 import { getRoomChannel } from '../reducers/rooms'
 import { getRooms } from '../reducers/userSubscriptions'
 
-export const createSubscription = (slug) => (dispatch, getState) => {
+export const createSubscription = (slug, onSuccess, onError) => (dispatch, getState) => {
   const channel = getRoomChannel(getState(), slug)
 
-  return channel.push('room:subscription:create')
+  return channel
+    .push('room:subscription:create')
+    .receive('ok', (response) => onSuccess && onSuccess(response))
+    .receive('error', (response) => onError && onError(response))
+}
+
+export const updateSubscription = (slug, values, onSuccess, onError) => (dispatch, getState) => {
+  const channel = getRoomChannel(getState(), slug)
+
+  return channel
+    .push('room:subscription:update', values)
+    .receive('ok', (response) => onSuccess && onSuccess(response))
+    .receive('error', (response) => onError && onError(response))
 }
 
 export const addUserSubscription = (subscription) => ({

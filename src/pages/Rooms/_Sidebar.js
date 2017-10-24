@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { map, sortBy } from 'lodash'
+import { updateSubscription } from '../../actions/userSubscriptions'
 import { getIsConnected } from '../../reducers/connectedUsers'
 import { getCurrentUser } from '../../reducers/currentUser'
 import { getDirectMessageUser } from '../../reducers/roomSubscriptions'
@@ -10,14 +11,31 @@ import { newDirectMessagePath, newRoomPath, searchRoomsPath } from '../../helper
 import InvisibleContainer from '../../components/InvisibleContainer'
 import SidebarRoomsList from './_SidebarList'
 import UserConnectivityDot from '../Users/_ConnectivityDot'
+import { Icon } from 'antd'
 
-const RoomsSidebar = ({ rooms }) => {
-  const displayDirectMessage = ({ directMessageUser: user }) => (
-    <InvisibleContainer>
-      <UserConnectivityDot isConnected={user.isConnected} />
-      { user.name }
-    </InvisibleContainer>
-  )
+const RoomsSidebar = ({ handleDirectMessageClose, rooms }) => {
+  const displayDirectMessage = (room) => {
+    const { directMessageUser: user } = room
+    const handleClick = (event) => {
+      if (event) {
+        event.preventDefault()
+      }
+
+      return handleDirectMessageClose(room)
+    }
+
+    return (
+      <InvisibleContainer>
+        <div>
+          <UserConnectivityDot isConnected={user.isConnected} />
+          { user.name }
+        </div>
+        <button onClick={handleClick}>
+          <Icon type='close-circle-o' />
+        </button>
+      </InvisibleContainer>
+    )
+  }
 
   return (
     <div id='rooms-sidebar'>
@@ -68,8 +86,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = () => ({
-
+const mapDispatchToProps = (dispatch) => ({
+  handleDirectMessageClose: (room) => {
+    return updateSubscription(room.slug, {state: 'closed'})
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomsSidebar)

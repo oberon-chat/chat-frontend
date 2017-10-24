@@ -59,6 +59,11 @@ body {
       color: rgba(0, 0, 0, 0.85); }
   #chat-root #sidebar .chat-sidebar-rooms-list-container {
     margin: 15px 0; }
+    #chat-root #sidebar .chat-sidebar-rooms-list-container .chat-room-link {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%; }
   #chat-root .chat-search {
     width: 100%; }
   #chat-root .chat-resource-list-container {
