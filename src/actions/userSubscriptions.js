@@ -14,6 +14,11 @@ export const addUserSubscription = (subscription) => ({
   subscription: subscription
 })
 
+export const replaceUserSubscription = (subscription) => ({
+  type: 'REPLACE_USER_SUBSCRIPTION',
+  subscription: subscription
+})
+
 export const replaceUserSubscriptions = (subscriptions) => ({
   type: 'REPLACE_USER_SUBSCRIPTIONS',
   subscriptions: subscriptions

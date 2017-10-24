@@ -6,6 +6,10 @@ export const userSubscriptionsReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_USER_SUBSCRIPTION':
       return state.concat(action.subscription)
+    case 'REPLACE_USER_SUBSCRIPTION':
+      return map(state, (subscription) => (
+        subscription.id === action.subscription.id ? action.subscription : subscription
+      ))
     case 'REPLACE_USER_SUBSCRIPTIONS':
       return action.subscriptions
     default:

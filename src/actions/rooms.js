@@ -3,7 +3,6 @@ import { joinChannel } from './channels'
 import { addPublicRoom, replacePublicRooms } from './publicRooms'
 import { addMessage, removeMessage, replaceMessage, replaceMessages } from './roomMessages'
 import { addRoomSubscription, replaceRoomSubscriptions } from './roomSubscriptions'
-import { addUserSubscription, joinAllRoomChannels } from './userSubscriptions'
 import { getRoomsChannel } from '../reducers/rooms'
 import { camelize } from '../helpers/data'
 
@@ -32,11 +31,6 @@ export const joinRoomsChannel = (onSuccess, onError) => (dispatch, getState) => 
       dispatch(addPublicRoom(data))
     })
 
-    channel.on('user:subscription:created', (data) => {
-      dispatch(addUserSubscription(camelize(data)))
-      dispatch(joinAllRoomChannels())
-    })
-
     return channel
   }
 
@@ -52,11 +46,6 @@ export const joinRoomChannel = (slug, onSuccess, onError) => (dispatch, getState
 
     channel.on('room:subscription:created', (data) => {
       dispatch(addRoomSubscription(slug, camelize(data)))
-    })
-
-    channel.on('user:subscription:created', (data) => {
-      dispatch(addUserSubscription(camelize(data)))
-      dispatch(joinAllRoomChannels())
     })
 
     channel.on('messages', (data) => {
