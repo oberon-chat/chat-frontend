@@ -4,6 +4,7 @@ import { difference, forEach, isEmpty, map, reduce, sortBy } from 'lodash'
 import { getFormValues, Field, reduxForm, reset as resetForm } from 'redux-form'
 import history from '../../app/history'
 import { createDirectMessage } from '../../actions/directMessages'
+import { updateSubscription } from '../../actions/userSubscriptions'
 import { getCurrentUser } from '../../reducers/currentUser'
 import { getRoomUserIds } from '../../reducers/roomSubscriptions'
 import { getUsers } from '../../reducers/users'
@@ -108,7 +109,10 @@ const mapDispatchToProps = (dispatch) => ({
 
     await dispatch(createDirectMessage(user.id, onSuccess, onError))
   },
-  handleOpen: (room) => history.push(roomPath(room))
+  handleOpen: (roomSlug) => {
+    dispatch(updateSubscription(roomSlug, {state: 'open'}))
+    history.push(roomPath(roomSlug))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxForm)
