@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { difference, forEach, isEmpty, map, reduce, sortBy } from 'lodash'
+import { difference, forEach, isEmpty, map, reduce, reject, sortBy } from 'lodash'
 import { getFormValues, Field, reduxForm, reset as resetForm } from 'redux-form'
 import history from '../../app/history'
 import { createDirectMessage } from '../../actions/directMessages'
@@ -54,17 +54,17 @@ const NewDirectMessage = ({ findDirectMessage, handleCreate, handleOpen, matches
 const ReduxForm = reduxForm()(NewDirectMessage)
 
 const mapStateToProps = (state) => {
-  // Form data
+  const currentUser = getCurrentUser(state)
   const form = 'searchDirectMessagesForm'
   const formData = getFormValues(form)(state) || {}
 
   // User list data
   const users = getUsers(state)
   const sorted = sortBy(users, 'name')
-  const matches = searchUsers(sorted, formData.search)
+  const omitted = reject(sorted, (user) => user.id === currentUser.id)
+  const matches = searchUsers(omitted, formData.search)
 
   // Direct message data
-  const currentUser = getCurrentUser(state)
   const directMessageSlugs = map(getRoomsByType(state, 'direct'), 'slug')
   const directMessageUserIds = reduce(directMessageSlugs, (acc, slug) => {
     acc[slug] = getRoomUserIds(state, slug)
