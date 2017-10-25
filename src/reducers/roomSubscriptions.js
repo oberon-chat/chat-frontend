@@ -19,12 +19,15 @@ export const roomSubscriptionsReducer = (state = initialState, action) => {
   }
 }
 
-export const getSubscriptions = (state, key) => state.roomSubscriptions[key] || []
-export const getUsers = (state, key) => map(getSubscriptions(state, key), (subscription) => subscription.user)
+export const getRoomSubscriptions = (state, key) => state.roomSubscriptions[key] || []
+export const getUsers = (state, key) => map(getRoomSubscriptions(state, key), (subscription) => subscription.user)
 export const getDirectMessageUser = (state, key, currentUser) => {
   const user = find(getUsers(state, key), (user) => user.id !== currentUser.id)
 
   return isEmpty(user) ? {} : user
 }
+export const getRoomUserIds = (state, key) => (
+  map(getRoomSubscriptions(state, key), (item) => item.userId).sort()
+)
 
 export default roomSubscriptionsReducer

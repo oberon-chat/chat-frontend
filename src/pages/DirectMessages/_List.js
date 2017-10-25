@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 import { map } from 'lodash'
 import { Button } from 'antd'
 
-const UsersList = ({ onCreate, users }) => {
+const UsersList = ({ handleClick, users }) => {
   const renderUser = (user) => {
     return (
       <li key={user.id}>
         <h3>{user.name}</h3>
-        <Button icon='arrow-right' onClick={() => onCreate(user.id)}>
-          Create
+        <Button icon='arrow-right' onClick={() => handleClick(user)}>
+          Open
         </Button>
       </li>
     )

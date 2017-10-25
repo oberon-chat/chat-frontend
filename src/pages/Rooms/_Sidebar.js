@@ -88,7 +88,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   handleDirectMessageClose: (room) => {
-    return updateSubscription(room.slug, {state: 'closed'})
+    const onSuccess = (result) => console.log('success', result)
+    const onError = (result) => console.log('error', result)
+
+    return dispatch(updateSubscription(room.slug, {state: 'closed'}, onSuccess, onError))
   }
 })
 

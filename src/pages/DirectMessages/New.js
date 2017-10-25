@@ -1,11 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { sortBy } from 'lodash'
+import { difference, forEach, isEmpty, map, reduce, sortBy } from 'lodash'
 import { getFormValues, Field, reduxForm, reset as resetForm } from 'redux-form'
 import history from '../../app/history'
 import { createDirectMessage } from '../../actions/directMessages'
+import { getCurrentUser } from '../../reducers/currentUser'
+import { getRoomUserIds } from '../../reducers/roomSubscriptions'
 import { getUsers } from '../../reducers/users'
+import { getRoomsByType } from '../../reducers/userSubscriptions'
 import notification from '../../helpers/notification'
+import { roomPath } from '../../helpers/paths'
 import { searchUsers } from '../../helpers/search'
 import Content from '../Layout/_Content'
 import Header from '../Layout/_Header'
@@ -20,34 +24,73 @@ const SearchInput = (props) => (
   />
 )
 
-const NewDirectMessage = ({ handleCreate, matches }) => (
-  <Main>
-    <Header>
-      <h2>New Direct Message</h2>
-    </Header>
-    <Content classes='padded'>
-      <div className='chat-search'>
-        <Form layout='inline'>
-          <Form.Item>
-            <Field name='search' component={SearchInput} />
-          </Form.Item>
-        </Form>
-        <UsersList onCreate={handleCreate} users={matches} />
-      </div>
-    </Content>
-  </Main>
-)
+const NewDirectMessage = ({ findDirectMessage, handleCreate, handleOpen, matches }) => {
+  const handleClick = (user) => {
+    const room = findDirectMessage(user)
+
+    console.log('found room?', room, user.id)
+
+    // return room ? handleOpen(room) : handleCreate(user)
+  }
+
+  return (
+    <Main>
+      <Header>
+        <h2>New Direct Message</h2>
+      </Header>
+      <Content classes='padded'>
+        <div className='chat-search'>
+          <Form layout='inline'>
+            <Form.Item>
+              <Field name='search' component={SearchInput} />
+            </Form.Item>
+          </Form>
+          <UsersList handleClick={handleClick} users={matches} />
+        </div>
+      </Content>
+    </Main>
+  )
+}
 
 const ReduxForm = reduxForm()(NewDirectMessage)
 
 const mapStateToProps = (state) => {
+  // Form data
   const form = 'searchDirectMessagesForm'
   const formData = getFormValues(form)(state) || {}
+
+  // User list data
   const users = getUsers(state)
   const sorted = sortBy(users, 'name')
   const matches = searchUsers(sorted, formData.search)
 
+  // Direct message data
+  const currentUser = getCurrentUser(state)
+  const directMessageSlugs = map(getRoomsByType(state, 'direct'), 'slug')
+  const directMessageUserIds = reduce(directMessageSlugs, (acc, slug) => {
+    acc[slug] = getRoomUserIds(state, slug)
+
+    return acc
+  }, {})
+
+  const findDirectMessageSlugByExactSubscribers = (otherUser) => {
+    const matchIds = [currentUser.id, otherUser.id]
+
+    let match
+
+    forEach(directMessageUserIds, (userIds, slug) => {
+      if (isEmpty(difference(matchIds, userIds))) {
+        match = slug
+
+        return true
+      }
+    })
+
+    return match
+  }
+
   return {
+    findDirectMessage: findDirectMessageSlugByExactSubscribers,
     form: form,
     matches: matches
   }
@@ -55,7 +98,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   handleClear: () => dispatch(resetForm('searchDirectMessagesForm')),
-  handleCreate: async (otherUserId) => {
+  handleCreate: async (user) => {
     const onSuccess = (response) => {
       dispatch(resetForm('searchDirectMessagesForm'))
       history.push('/rooms/' + response.room.slug)
@@ -65,8 +108,9 @@ const mapDispatchToProps = (dispatch) => ({
       notification('Error creating direct message', 'error')
     }
 
-    await dispatch(createDirectMessage(otherUserId, onSuccess, onError))
-  }
+    await dispatch(createDirectMessage(user.id, onSuccess, onError))
+  },
+  handleOpen: (room) => history.push(roomPath(room))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxForm)
