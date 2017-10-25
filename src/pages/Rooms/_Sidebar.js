@@ -1,13 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { map, sortBy } from 'lodash'
+import history from '../../app/history'
 import { updateSubscription } from '../../actions/userSubscriptions'
 import { getIsConnected } from '../../reducers/connectedUsers'
 import { getCurrentUser } from '../../reducers/currentUser'
 import { getDirectMessageUser } from '../../reducers/roomSubscriptions'
 import { getOpenRoomsByType, getRoomsByType } from '../../reducers/userSubscriptions'
 import { getSupportRooms } from '../../reducers/supportRooms'
-import { newDirectMessagePath, newRoomPath, searchRoomsPath } from '../../helpers/paths'
+import { newDirectMessagePath, newRoomPath, roomPath, rootPath, searchRoomsPath } from '../../helpers/paths'
 import InvisibleContainer from '../../components/InvisibleContainer'
 import SidebarRoomsList from './_SidebarList'
 import UserConnectivityDot from '../Users/_ConnectivityDot'
@@ -41,25 +42,25 @@ const RoomsSidebar = ({ handleDirectMessageClose, rooms }) => {
     <div id='rooms-sidebar'>
       <SidebarRoomsList
         title='Support Rooms'
-        titleLink={searchRoomsPath()}
+        titleLink={searchRoomsPath}
         rooms={rooms.support}
       />
       <SidebarRoomsList
         title='Public Rooms'
-        titleLink={searchRoomsPath()}
-        newLink={newRoomPath()}
+        titleLink={searchRoomsPath}
+        newLink={newRoomPath}
         rooms={rooms.public}
       />
       <SidebarRoomsList
         title='Private Rooms'
-        titleLink={searchRoomsPath()}
-        newLink={newRoomPath()}
+        titleLink={searchRoomsPath}
+        newLink={newRoomPath}
         rooms={rooms.private}
       />
       <SidebarRoomsList
         title='Direct Messages'
-        titleLink={newDirectMessagePath()}
-        newLink={newDirectMessagePath()}
+        titleLink={newDirectMessagePath}
+        newLink={newDirectMessagePath}
         rooms={rooms.direct}
         displayRoom={displayDirectMessage}
       />
@@ -88,10 +89,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   handleDirectMessageClose: (room) => {
-    const onSuccess = (result) => console.log('success', result)
-    const onError = (result) => console.log('error', result)
+    const onSuccess = () => {
+      if (window.location.pathname === roomPath(room)) {
+        history.push(rootPath)
+      }
+    }
 
-    return dispatch(updateSubscription(room.slug, {state: 'closed'}, onSuccess, onError))
+    return dispatch(updateSubscription(room.slug, {state: 'closed'}, onSuccess))
   }
 })
 

@@ -28,9 +28,7 @@ const NewDirectMessage = ({ findDirectMessage, handleCreate, handleOpen, matches
   const handleClick = (user) => {
     const room = findDirectMessage(user)
 
-    console.log('found room?', room, user.id)
-
-    // return room ? handleOpen(room) : handleCreate(user)
+    return room ? handleOpen(room) : handleCreate(user)
   }
 
   return (
