@@ -10,13 +10,13 @@ import notification from '../../helpers/notification'
 import { rootPath } from '../../helpers/paths'
 import Header from '../Layout/_Header'
 
-const RoomHeader = ({ handleLeave, heading, isSubscribed }) => {
+const RoomHeader = ({ handleLeave, heading, isDirectMessage, isSubscribed }) => {
   return (
     <Header>
       <h2>{ heading }</h2>
       <div className='chat-room-header-actions'>
-        { isSubscribed &&
-          <button onClick={handleLeave}>Leave</button>
+        { isSubscribed && !isDirectMessage &&
+          <button onClick={ handleLeave }>Leave</button>
         }
       </div>
     </Header>
@@ -28,10 +28,12 @@ RoomHeader.displayName = 'RoomHeader'
 const mapStateToProps = (state, { room: slug }) => {
   const currentUser = getCurrentUser(state)
   const room = getRoom(state, slug)
-  const heading = room.type === 'direct' ? getDirectMessageUser(state, slug, currentUser).name : (room.name || slug)
+  const isDirectMessage = room.type === 'direct'
+  const heading = isDirectMessage ? getDirectMessageUser(state, slug, currentUser).name : (room.name || slug)
 
   return {
     heading: heading,
+    isDirectMessage: isDirectMessage,
     isSubscribed: getIsSubscribed(state, slug)
   }
 }
