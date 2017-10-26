@@ -32,6 +32,9 @@ body {
     flex-direction: column;
     width: 100%; }
   #chat-root #header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
     padding: 10px 0 10px 20px;
     width: 100%; }
   #chat-root #content {

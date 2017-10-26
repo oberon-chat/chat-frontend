@@ -1,4 +1,4 @@
-import { filter, find, map, reduce } from 'lodash'
+import { filter, find, map, reject, reduce } from 'lodash'
 
 const initialState = []
 
@@ -10,6 +10,8 @@ export const userSubscriptionsReducer = (state = initialState, action) => {
       return map(state, (subscription) => (
         subscription.id === action.subscription.id ? action.subscription : subscription
       ))
+    case 'REMOVE_USER_SUBSCRIPTION':
+      return reject(state, (subscription) => subscription.id === action.subscription.id)
     case 'REPLACE_USER_SUBSCRIPTIONS':
       return action.subscriptions
     default:

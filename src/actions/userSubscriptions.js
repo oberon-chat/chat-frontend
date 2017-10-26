@@ -21,6 +21,15 @@ export const updateSubscription = (slug, values, onSuccess, onError) => (dispatc
     .receive('error', (response) => onError && onError(response))
 }
 
+export const deleteSubscription = (slug, onSuccess, onError) => (dispatch, getState) => {
+  const channel = getRoomChannel(getState(), slug)
+
+  return channel
+    .push('room:subscription:delete')
+    .receive('ok', (response) => onSuccess && onSuccess(response))
+    .receive('error', (response) => onError && onError(response))
+}
+
 export const addUserSubscription = (subscription) => ({
   type: 'ADD_USER_SUBSCRIPTION',
   subscription: subscription
@@ -34,6 +43,11 @@ export const replaceUserSubscription = (subscription) => ({
 export const replaceUserSubscriptions = (subscriptions) => ({
   type: 'REPLACE_USER_SUBSCRIPTIONS',
   subscriptions: subscriptions
+})
+
+export const removeUserSubscription = (subscription) => ({
+  type: 'REMOVE_USER_SUBSCRIPTION',
+  subscription: subscription
 })
 
 export const joinAllRoomChannels = () => (dispatch, getState) => {

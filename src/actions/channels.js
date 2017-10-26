@@ -38,3 +38,8 @@ export const joinChannel = (dispatch, getState, key, channelCallbacks, onSuccess
       .receive('error', onJoinError)
   })
 }
+
+export const leaveChannel = (key) => ({
+  type: 'CHANNEL_LEAVE',
+  key: key
+})
