@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash'
 const initialState = {
   connected: false,
   connection: null,
-  url: process.env.REACT_APP_SERVER_WEBSOCKET_ADDRESS + process.env.REACT_APP_SERVER_WEBSOCKET_PATH
+  url: process.env.REACT_APP_SERVER_WEBSOCKET_ADDRESS
 }
 
 const socketReducer = (state = initialState, action) => {
