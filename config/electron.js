@@ -27,7 +27,7 @@ function createWindow () {
   let startUrl
 
   if (process.env.NODE_ENV == 'development') {
-    startUrl = 'http://chat.dev'
+    startUrl = process.env.REACT_APP_ADDRESS
   } else {
 	  startUrl = url.format({
       pathname: path.join(__dirname, '../build/index.html'),
