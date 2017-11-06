@@ -77,14 +77,14 @@
   },
   "homepage": "./",
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "fix": "yarn standard -- --fix",
-    "lint": "yarn standard",
+    "start": "source .env && node scripts/start.js",
+    "build": "source .env && node scripts/build.js",
+    "fix": "source .env && yarn standard -- --fix",
+    "lint": "source .env && yarn standard",
     "sass": "node-sass ./src/static/ -o ./src/static",
-    "test": "node scripts/test.js --env=jsdom",
-    "electron": "electron config/electron.js",
-    "portable": "bin/portable"
+    "test": "source .env && node scripts/test.js --env=jsdom",
+    "electron": "source .env && electron config/electron.js",
+    "portable": "source .env && bin/portable"
   },
   "standard": {
     "parser": "babel-eslint",

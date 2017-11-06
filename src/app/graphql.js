@@ -27,7 +27,7 @@ const createApolloClient = (uri) => {
 }
 
 export const clients = {
-  oauth2: createApolloClient('http://oauth2.chat-server.dev')
+  oauth2: createApolloClient(process.env.REACT_APP_CHAT_OAUTH2_ADDRESS)
 }
 
 export const resetStore = (key) => clients[key].resetStore()
