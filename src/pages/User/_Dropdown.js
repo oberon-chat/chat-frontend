@@ -3,17 +3,17 @@ import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
 import { getCurrentUser } from '../../reducers/currentUser'
 import UserLogout from './_Logout'
-import { Dropdown, Icon } from 'antd'
+import { Dropdown, Icon, Menu } from 'antd'
 
 export const UserDropdown = ({ currentUser }) => {
   if (isEmpty(currentUser)) { return null }
 
   const content = (
-    <ul>
-      <li>
+    <Menu>
+      <Menu.Item>
         <UserLogout />
-      </li>
-    </ul>
+      </Menu.Item>
+    </Menu>
   )
 
   return (

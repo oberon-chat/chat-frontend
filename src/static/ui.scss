@@ -6,6 +6,17 @@ body {
   width: 100vw;
 }
 
+/* Dynamically created DOM elements */
+
+.ant-dropdown-menu-item button {
+  background: inherit;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 /* Structure */
 
 #chat-root {
@@ -42,7 +53,7 @@ body {
       display: flex;
       justify-content: space-between;
       flex-direction: row;
-      padding: 10px 0 10px 20px;
+      padding: 10px 20px 10px 20px;
       width: 100%;
     }
 
@@ -102,6 +113,21 @@ body {
   }
 
   /* Content */
+
+  button.anchor {
+    background: inherit;
+    border: none;
+    margin: 0;
+    padding: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .chat-room-header-actions button {
+    font-size: 20px;
+  }
 
   .chat-search {
     width: 100%;
