@@ -5,11 +5,11 @@ import { joinRoomChannel, viewRoom } from '../../actions/rooms'
 import notification from '../../helpers/notification'
 import RoomContent from './_Content'
 import RoomHeader from './_Header'
-import RoomSidebar from './_Sidebar'
+import RoomDetails from './_Details'
 import Content from '../Layout/_Content'
 import Main from '../Layout/_Main'
 
-class Room extends Component {
+class OneRoom extends Component {
   componentDidMount () {
     this.props.onJoin(this.props.room)
   }
@@ -28,19 +28,18 @@ class Room extends Component {
         <RoomHeader room={room} />
         <Content>
           <RoomContent messageId={messageId} room={room} />
-          <RoomSidebar room={room} />
+          <RoomDetails room={room} />
         </Content>
       </Main>
     )
   }
 }
 
-const mapStateToProps = (_state, { match }) => ({
-  messageId: match.params.messageId,
-  room: match.params.room
+const mapStateToProps = () => ({
+
 })
 
-const mapDispatchToProps = (dispatch, { match }) => ({
+const mapDispatchToProps = (dispatch) => ({
   onJoin: (room) => {
     const onSuccess = () => {
       dispatch(viewRoom(room))
@@ -55,4 +54,4 @@ const mapDispatchToProps = (dispatch, { match }) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Room)
+export default connect(mapStateToProps, mapDispatchToProps)(OneRoom)

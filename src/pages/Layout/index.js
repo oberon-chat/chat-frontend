@@ -17,7 +17,7 @@ import Login from '../Login'
 import Main from './_Main'
 import NewDirectMessage from '../DirectMessages/New'
 import NewRoom from '../Rooms/New'
-import Room from '../Room'
+import Rooms from '../Rooms'
 import SearchRoom from '../Rooms/Search'
 
 export const Layout = ({ isLoggedIn }) => {
@@ -29,8 +29,8 @@ export const Layout = ({ isLoggedIn }) => {
         <Route path={'/new-direct-message'} component={NewDirectMessage} />
         <Route path={'/new-room'} component={NewRoom} />
         <Route path={'/search-rooms'} component={SearchRoom} />
-        <Route path={'/rooms/:room/messages/:messageId/edit'} component={Room} />
-        <Route path={'/rooms/:room'} component={Room} />
+        <Route path={'/rooms/:roomId/messages/:messageId/edit'} component={Rooms} />
+        <Route path={'/rooms/:roomId'} component={Rooms} />
         <Route component={Main} />
       </Switch>
     </InvisibleContainer>
