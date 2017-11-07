@@ -31,7 +31,7 @@ const RoomsSidebar = ({ handleDirectMessageClose, rooms }) => {
           <UserConnectivityDot isConnected={user.isConnected} />
           { user.name }
         </div>
-        <button onClick={handleClick}>
+        <button className='anchor' onClick={handleClick}>
           <Icon type='close-circle-o' />
         </button>
       </InvisibleContainer>
