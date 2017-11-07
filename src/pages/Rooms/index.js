@@ -1,6 +1,6 @@
 import React from 'react'
 import { map } from 'lodash'
-import Room from '../Room/One'
+import Room from './One'
 import Main from '../Layout/_Main'
 
 const Rooms = ({ match }) => {

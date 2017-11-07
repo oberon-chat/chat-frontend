@@ -1,5 +1,5 @@
 import React from 'react'
-import RoomsSidebar from '../Rooms/_Sidebar'
+import RoomsSidebar from './_SidebarRooms'
 import UserDropdown from '../User/_Dropdown'
 
 const Sidebar = ({ children }) => (

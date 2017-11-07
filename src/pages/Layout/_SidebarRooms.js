@@ -10,7 +10,7 @@ import { getOpenRoomsByType, getRoomsByType } from '../../reducers/userSubscript
 import { getSupportRooms } from '../../reducers/supportRooms'
 import { newDirectMessagePath, newRoomPath, roomPath, rootPath, searchRoomsPath } from '../../helpers/paths'
 import InvisibleContainer from '../../components/InvisibleContainer'
-import SidebarRoomsList from './_SidebarList'
+import SidebarRoomsList from './_SidebarRoomList'
 import UserConnectivityDot from '../Users/_ConnectivityDot'
 import { Icon } from 'antd'
 
