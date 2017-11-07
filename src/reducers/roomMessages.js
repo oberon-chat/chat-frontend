@@ -1,4 +1,4 @@
-import { clone, find, map, reject, reverse } from 'lodash'
+import { clone, find, head, map, reject, reverse } from 'lodash'
 
 const initialState = {}
 
@@ -42,7 +42,8 @@ export const getRoomMessages = (state, slug) => state.roomMessages[slug] || []
 export const getRoomMessage = (state, slug, id) => (
   find(state.roomMessages[slug], (message) => message.id === id) || {}
 )
-export const getLastRoomMessage = (state, slug, user) => (
+export const getLastRoomMessage = (state, slug) => head(reverse(clone(state.roomMessages[slug]))) || {}
+export const getUsersLastRoomMessage = (state, slug, user) => (
   find(reverse(clone(state.roomMessages[slug])), (message) => message.user.id === user.id) || {}
 )
 

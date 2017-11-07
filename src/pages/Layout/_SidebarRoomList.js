@@ -1,16 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { map } from 'lodash'
+import { isEmpty, map } from 'lodash'
 import moment from 'moment'
+import { getLastRoomMessage } from '../../reducers/roomMessages'
 import { getLastViewed } from '../../reducers/roomsMeta'
-import { meta } from '../../helpers/presence'
 import { Icon } from 'antd'
 
-const RoomsSidebarList = ({ displayRoom, lastViewed, newLink, rooms, title, titleLink }) => {
+const RoomsSidebarList = ({ displayRoom, lastViewed, lastMessage, newLink, rooms, title, titleLink }) => {
   const renderRoom = (room) => {
-    const lastMessage = meta(room, 'last_message')
-    const lastMessageAt = lastMessage ? moment(lastMessage.inserted_at).unix() : 0
+    const lastRoomMessage = lastMessage(room)
+    const lastMessageAt = isEmpty(lastRoomMessage) ? 0 : moment(lastRoomMessage.insertedAt).unix()
     const lastViewedAt = Math.floor((lastViewed(room) || 0) / 1000)
     const classes = lastMessageAt > lastViewedAt ? 'new-message' : ''
 
@@ -45,7 +45,8 @@ const RoomsSidebarList = ({ displayRoom, lastViewed, newLink, rooms, title, titl
 }
 
 const mapStateToProps = (state, { type }) => ({
-  lastViewed: (key) => getLastViewed(state, key)
+  lastMessage: (room) => getLastRoomMessage(state, room.slug),
+  lastViewed: (room) => getLastViewed(state, room.slug)
 })
 
 const mapDispatchToProps = () => ({

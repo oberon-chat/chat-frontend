@@ -6,7 +6,7 @@ import { get, isEmpty } from 'lodash'
 import history from '../../app/history'
 import { submitMessage } from '../../actions/roomMessages'
 import { getCurrentUser } from '../../reducers/currentUser'
-import { getLastRoomMessage } from '../../reducers/roomMessages'
+import { getUsersLastRoomMessage } from '../../reducers/roomMessages'
 import { editMessagePath } from '../../helpers/paths'
 import MessageForm from './_Form'
 
@@ -40,7 +40,7 @@ export class NewMessage extends Component {
 
 const mapStateToProps = (state, { room }) => {
   const currentUser = getCurrentUser(state)
-  const lastMessage = getLastRoomMessage(state, room, currentUser)
+  const lastMessage = getUsersLastRoomMessage(state, room, currentUser)
 
   return {
     form: room + 'NewMessageForm',
