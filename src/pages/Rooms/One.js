@@ -42,9 +42,9 @@ const mapStateToProps = () => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onJoin: (room) => {
-    const onSuccess = () => {
+    const onSuccess = async () => {
+      await dispatch(viewSubscription(room))
       dispatch(viewRoom(room))
-      dispatch(viewSubscription(room))
     }
 
     const onError = () => {
