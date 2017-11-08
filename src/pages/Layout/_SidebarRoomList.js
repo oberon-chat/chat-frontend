@@ -5,14 +5,16 @@ import { isEmpty, map } from 'lodash'
 import moment from 'moment'
 import { getLastRoomMessage } from '../../reducers/roomMessages'
 import { getViewedAt } from '../../reducers/userSubscriptions'
+import { getViewing } from '../../reducers/roomsMeta'
 import { Icon } from 'antd'
 
-const RoomsSidebarList = ({ displayRoom, lastMessage, newLink, rooms, title, titleLink, viewedAt }) => {
+const RoomsSidebarList = ({ displayRoom, focusedRoom, lastMessage, newLink, rooms, title, titleLink, viewedAt }) => {
   const renderRoom = (room) => {
     const lastRoomMessage = lastMessage(room)
     const lastMessageAt = isEmpty(lastRoomMessage) ? 0 : moment(lastRoomMessage.insertedAt).unix()
     const lastViewedAt = moment(viewedAt(room) || 0).unix()
-    const classes = lastMessageAt > lastViewedAt ? 'new-message' : ''
+    const isFocused = (focusedRoom === room.slug)
+    const classes = (!isFocused && lastMessageAt > lastViewedAt) ? 'new-message' : ''
 
     return (
       <li key={room.slug} className={classes}>
@@ -45,6 +47,7 @@ const RoomsSidebarList = ({ displayRoom, lastMessage, newLink, rooms, title, tit
 }
 
 const mapStateToProps = (state, { type }) => ({
+  focusedRoom: getViewing(state),
   lastMessage: (room) => getLastRoomMessage(state, room.slug),
   viewedAt: (room) => getViewedAt(state, room.slug)
 })
