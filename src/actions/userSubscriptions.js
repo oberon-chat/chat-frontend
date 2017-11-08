@@ -21,6 +21,15 @@ export const updateSubscription = (slug, values, onSuccess, onError) => (dispatc
     .receive('error', (response) => onError && onError(response))
 }
 
+export const viewSubscription = (slug, onSuccess, onError) => (dispatch, getState) => {
+  const channel = getRoomChannel(getState(), slug)
+
+  return channel
+    .push('room:subscription:view')
+    .receive('ok', (response) => onSuccess && onSuccess(response))
+    .receive('error', (response) => onError && onError(response))
+}
+
 export const deleteSubscription = (slug, onSuccess, onError) => (dispatch, getState) => {
   const channel = getRoomChannel(getState(), slug)
 

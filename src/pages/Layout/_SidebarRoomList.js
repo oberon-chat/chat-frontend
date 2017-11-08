@@ -11,7 +11,7 @@ const RoomsSidebarList = ({ displayRoom, lastMessage, newLink, rooms, title, tit
   const renderRoom = (room) => {
     const lastRoomMessage = lastMessage(room)
     const lastMessageAt = isEmpty(lastRoomMessage) ? 0 : moment(lastRoomMessage.insertedAt).unix()
-    const lastViewedAt = Math.floor((viewedAt(room) || 0) / 1000)
+    const lastViewedAt = moment(viewedAt(room) || 0).unix()
     const classes = lastMessageAt > lastViewedAt ? 'new-message' : ''
 
     return (
