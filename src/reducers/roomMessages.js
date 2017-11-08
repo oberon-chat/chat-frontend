@@ -1,4 +1,5 @@
 import { clone, find, head, map, reject, reverse } from 'lodash'
+import moment from 'moment'
 
 const initialState = {}
 
@@ -46,5 +47,23 @@ export const getLastRoomMessage = (state, slug) => head(reverse(clone(state.room
 export const getUsersLastRoomMessage = (state, slug, user) => (
   find(reverse(clone(state.roomMessages[slug])), (message) => message.user.id === user.id) || {}
 )
+export const getRoomMessagesAfter = (state, slug, timestamp) => {
+  const messages = getRoomMessages(state, slug)
+
+  let i, result = []
+
+  for (i = messages.length - 1; i > 0; i--) {
+    const message = messages[i]
+    const insertedAt = moment(message.insertedAt).unix()
+
+    if (insertedAt > timestamp) {
+      result.push(message)
+    } else {
+      break
+    }
+  }
+
+  return result
+}
 
 export default roomMessagesReducer

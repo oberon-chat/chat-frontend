@@ -3,23 +3,30 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { isEmpty, map } from 'lodash'
 import moment from 'moment'
-import { getLastRoomMessage } from '../../reducers/roomMessages'
+import { getLastRoomMessage, getRoomMessagesAfter } from '../../reducers/roomMessages'
 import { getViewedAt } from '../../reducers/userSubscriptions'
 import { getViewing } from '../../reducers/roomsMeta'
 import { Icon } from 'antd'
 
-const RoomsSidebarList = ({ displayRoom, focusedRoom, lastMessage, newLink, rooms, title, titleLink, viewedAt }) => {
+const RoomsSidebarList = ({ displayRoom, focusedRoom, lastMessage, newLink, roomMessagesAfter, rooms, title, titleLink, viewedAt }) => {
   const renderRoom = (room) => {
     const lastRoomMessage = lastMessage(room)
     const lastMessageAt = isEmpty(lastRoomMessage) ? 0 : moment(lastRoomMessage.insertedAt).unix()
     const lastViewedAt = moment(viewedAt(room) || 0).unix()
     const isFocused = (focusedRoom === room.slug)
-    const classes = (!isFocused && lastMessageAt > lastViewedAt) ? 'new-message' : ''
+    const hasNewMessages = !isFocused && (lastMessageAt > lastViewedAt)
+    const classes = hasNewMessages ? 'new-message' : ''
+
+    let notifications
+
+    if (hasNewMessages && room.type === 'direct') {
+      notifications = roomMessagesAfter(room, lastViewedAt).length
+    }
 
     return (
       <li key={room.slug} className={classes}>
         <Link className='chat-room-link' to={'/rooms/' + room.slug}>
-          {displayRoom ? displayRoom(room) : room.slug}
+          {displayRoom ? displayRoom(room, notifications) : room.slug}
         </Link>
       </li>
     )
@@ -49,6 +56,7 @@ const RoomsSidebarList = ({ displayRoom, focusedRoom, lastMessage, newLink, room
 const mapStateToProps = (state, { type }) => ({
   focusedRoom: getViewing(state),
   lastMessage: (room) => getLastRoomMessage(state, room.slug),
+  roomMessagesAfter: (room, timestamp) => getRoomMessagesAfter(state, room.slug, timestamp),
   viewedAt: (room) => getViewedAt(state, room.slug)
 })
 

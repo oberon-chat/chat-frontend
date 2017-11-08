@@ -116,6 +116,10 @@ body {
         &:hover button {
           display: inline-block;
         }
+
+        &:hover .notifications-count {
+          display: none;
+        }
       }
     }
   }

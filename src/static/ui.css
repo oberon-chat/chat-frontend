@@ -78,6 +78,8 @@ body {
         display: none; }
       #chat-root #sidebar .chat-sidebar-rooms-list-container .chat-room-link:hover button {
         display: inline-block; }
+      #chat-root #sidebar .chat-sidebar-rooms-list-container .chat-room-link:hover .notifications-count {
+        display: none; }
   #chat-root button.anchor {
     background: inherit;
     border: none;

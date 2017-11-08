@@ -15,7 +15,7 @@ import UserConnectivityDot from '../Users/_ConnectivityDot'
 import { Icon } from 'antd'
 
 const RoomsSidebar = ({ handleDirectMessageClose, rooms }) => {
-  const displayDirectMessage = (room) => {
+  const displayDirectMessage = (room, notifications) => {
     const { directMessageUser: user } = room
     const handleClick = (event) => {
       if (event) {
@@ -31,9 +31,16 @@ const RoomsSidebar = ({ handleDirectMessageClose, rooms }) => {
           <UserConnectivityDot isConnected={user.isConnected} />
           { user.name }
         </div>
-        <button className='anchor' onClick={handleClick}>
-          <Icon type='close-circle-o' />
-        </button>
+        <div>
+          { notifications &&
+            <span className='notifications-count'>
+              { notifications }
+            </span>
+          }
+          <button className='anchor' onClick={handleClick}>
+            <Icon type='close-circle-o' />
+          </button>
+        </div>
       </InvisibleContainer>
     )
   }
