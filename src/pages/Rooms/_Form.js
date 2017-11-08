@@ -21,7 +21,6 @@ const RoomType = (props) => {
   return (
     <Radio.Group {...passedProps}>
       <Radio.Button value='public'>Public</Radio.Button>
-      <Radio.Button value='private'>Private</Radio.Button>
     </Radio.Group>
   )
 }

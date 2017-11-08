@@ -59,12 +59,6 @@ const RoomsSidebar = ({ handleDirectMessageClose, rooms }) => {
         rooms={rooms.public}
       />
       <SidebarRoomsList
-        title='Private Rooms'
-        titleLink={searchRoomsPath}
-        newLink={newRoomPath}
-        rooms={rooms.private}
-      />
-      <SidebarRoomsList
         title='Direct Messages'
         titleLink={newDirectMessagePath}
         newLink={newDirectMessagePath}

@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { sortBy, values } from 'lodash'
+import { Link } from 'react-router-dom'
 import { getFormValues, Field, reduxForm, reset as resetForm } from 'redux-form'
 import { getPublicRooms } from '../../reducers/publicRooms'
 import { getSupportRooms } from '../../reducers/supportRooms'
+import { newRoomPath } from '../../helpers/paths'
 import { searchRooms } from '../../helpers/search'
 import Content from '../Layout/_Content'
 import Header from '../Layout/_Header'
@@ -30,6 +32,9 @@ const SearchRooms = ({ matches }) => (
           <Form.Item>
             <Field name='search' component={SearchInput} />
           </Form.Item>
+          <span>
+            Or create a {' '} <Link to={newRoomPath}>new room</Link>
+          </span>
         </Form>
         <RoomsList rooms={matches} />
       </div>
