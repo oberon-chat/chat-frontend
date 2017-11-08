@@ -6,6 +6,12 @@ import { addUserSubscription, joinAllRoomChannels, removeUserSubscription, repla
 import { getConnectedUsersPresence } from '../reducers/connectedUsers'
 import { camelize, listToObject } from '../helpers/data'
 
+export const addUser = (user) => ({
+  type: 'ADD_USER',
+  key: user.id,
+  user: user
+})
+
 export const replaceUsers = (users) => ({
   type: 'REPLACE_USERS',
   users: users
@@ -19,6 +25,10 @@ export const joinUsersChannel = (onSuccess, onError) => (dispatch, getState) => 
       const asObject = listToObject(cased)
 
       dispatch(replaceUsers(asObject))
+    })
+
+    channel.on('user:created', (data) => {
+      dispatch(addUser(data))
     })
 
     channel.on('users:connected:state', (data) => {
