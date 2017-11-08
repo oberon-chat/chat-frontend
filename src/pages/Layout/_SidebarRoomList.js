@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 import { isEmpty, map } from 'lodash'
 import moment from 'moment'
 import { getLastRoomMessage } from '../../reducers/roomMessages'
-import { getLastViewed } from '../../reducers/roomsMeta'
+import { getViewedAt } from '../../reducers/userSubscriptions'
 import { Icon } from 'antd'
 
-const RoomsSidebarList = ({ displayRoom, lastViewed, lastMessage, newLink, rooms, title, titleLink }) => {
+const RoomsSidebarList = ({ displayRoom, lastMessage, newLink, rooms, title, titleLink, viewedAt }) => {
   const renderRoom = (room) => {
     const lastRoomMessage = lastMessage(room)
     const lastMessageAt = isEmpty(lastRoomMessage) ? 0 : moment(lastRoomMessage.insertedAt).unix()
-    const lastViewedAt = Math.floor((lastViewed(room) || 0) / 1000)
+    const lastViewedAt = Math.floor((viewedAt(room) || 0) / 1000)
     const classes = lastMessageAt > lastViewedAt ? 'new-message' : ''
 
     return (
@@ -46,7 +46,7 @@ const RoomsSidebarList = ({ displayRoom, lastViewed, lastMessage, newLink, rooms
 
 const mapStateToProps = (state, { type }) => ({
   lastMessage: (room) => getLastRoomMessage(state, room.slug),
-  lastViewed: (room) => getLastViewed(state, room.slug)
+  viewedAt: (room) => getViewedAt(state, room.slug)
 })
 
 const mapDispatchToProps = () => ({

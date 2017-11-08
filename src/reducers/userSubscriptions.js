@@ -20,6 +20,8 @@ export const userSubscriptionsReducer = (state = initialState, action) => {
 }
 
 export const getSubscriptions = (state) => state.userSubscriptions || []
+export const getSubscription = (state, slug) => find(getSubscriptions(state), (subscription) => subscription.room.slug === slug) || {}
+export const getViewedAt = (state, slug) => getSubscription(state, slug).viewedAt
 export const getRooms = (state) => map(getSubscriptions(state), (subscription) => subscription.room)
 export const getRoom = (state, slug) => find(getRooms(state), (room) => room.slug === slug) || {}
 export const getRoomsByType = (state, type) => filter(getRooms(state), (room) => room.type === type)

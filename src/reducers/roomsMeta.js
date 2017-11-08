@@ -9,9 +9,9 @@ export const roomsMetaReducer = (state = initialState, action) => {
 
       return reduce(withCurrentRoom, (acc, value, room) => {
         if (room === action.room) {
-          acc[room] = { ...value, viewing: true, lastViewed: Date.now() }
+          acc[room] = { ...value, viewing: true }
         } else if (value.viewing) {
-          acc[room] = { ...value, viewing: false, lastViewed: Date.now() }
+          acc[room] = { ...value, viewing: false }
         } else {
           acc[room] = value
         }
@@ -25,7 +25,6 @@ export const roomsMetaReducer = (state = initialState, action) => {
 
 export const getRoomsMeta = (state) => state.roomsMeta || {}
 export const getRoomMeta = (state, slug) => getRoomsMeta(state)[slug] || {}
-export const getLastViewed = (state, slug) => getRoomMeta(state, slug).lastViewed
 export const getActive = (state) => {
   const rooms = getRoomsMeta(state)
   const found = find(rooms, (room) => room.viewing)
