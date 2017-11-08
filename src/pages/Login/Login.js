@@ -4,7 +4,7 @@ import { logIn as logInCurrentUser } from '../../actions/currentUser'
 import { getIsLoggedIn } from '../../reducers/currentUser'
 import history from '../../app/history'
 import ApolloClient from '../../components/ApolloClient'
-import Particles from '../../components/Particles'
+import ParticleNetwork from '../../components/ParticleNetwork'
 import Redirect from '../../components/Redirect'
 import LoginForm from './_LoginForm'
 import { Button } from 'antd'
@@ -48,7 +48,7 @@ const Login = ({ isLoggedIn, logInToClient, logInToServer }) => {
 
   return (
     <div id='login-container'>
-      <Particles id='login-background' />
+      <ParticleNetwork id='login-background' />
       <div id='login-content' className='center-children'>
         <div>
           <h1>Login</h1>

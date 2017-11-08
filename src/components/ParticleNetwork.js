@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
-import ParticleNetwork from '../lib/particles'
+import particleNetwork from '../lib/particle-network'
 
-class Particles extends Component {
+class ParticleNetworkComponent extends Component {
   componentDidMount () {
     const container = findDOMNode(this)
     const options = {
-      density: 10000,
-      velocity: 0.5
+      background: 'inherit',
+      density: 15000,
+      velocity: 0.3
     }
 
-    new ParticleNetwork(container, options) // eslint-disable-line
+    new particleNetwork(container, options) // eslint-disable-line
   }
 
   render () {
@@ -22,4 +23,4 @@ class Particles extends Component {
   }
 }
 
-export default Particles
+export default ParticleNetworkComponent
