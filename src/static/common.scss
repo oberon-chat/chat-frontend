@@ -151,34 +151,6 @@
     max-height: 80px;
   }
 
-  #login-container {
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-
-    #login-background {
-      background: linear-gradient(180deg, #1a252f, #0b3850);
-      height: 100vh;
-      width: 100vw;
-
-      canvas {
-        opacity: 0.5;
-      }
-    }
-
-    #login-content {
-      background: #fff;
-      left: 0;
-      top: 0;
-      height: 100vh;
-      max-width: 320px;
-      padding: 25px 50px;
-      position: fixed;
-      width: 30%;
-      z-index: 100;
-    }
-  }
-
   .message-list {
 
   }
