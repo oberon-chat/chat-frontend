@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { isEmpty, map } from 'lodash'
+import { includes, isEmpty, map } from 'lodash'
 import moment from 'moment'
 import { getLastRoomMessage, getRoomMessagesAfter } from '../../reducers/roomMessages'
 import { getViewedAt } from '../../reducers/userSubscriptions'
@@ -19,7 +19,7 @@ const RoomsSidebarList = ({ displayRoom, focusedRoom, lastMessage, newLink, room
 
     let notifications
 
-    if (hasNewMessages && room.type === 'direct') {
+    if (hasNewMessages && includes(['direct', 'support'], room.type)) {
       notifications = roomMessagesAfter(room, lastViewedAt).length
     }
 

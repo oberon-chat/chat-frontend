@@ -45,12 +45,28 @@ const RoomsSidebar = ({ handleDirectMessageClose, rooms }) => {
     )
   }
 
+  const displaySupportRoom = (room, notifications) => (
+    <InvisibleContainer>
+      <div>
+        { room.slug }
+      </div>
+      <div>
+        { notifications &&
+          <span className='notifications-count'>
+            { notifications }
+          </span>
+        }
+      </div>
+    </InvisibleContainer>
+  )
+
   return (
     <div id='rooms-sidebar'>
       <SidebarRoomsList
         title='Support Rooms'
         titleLink={searchRoomsPath}
         rooms={rooms.support}
+        displayRoom={displaySupportRoom}
       />
       <SidebarRoomsList
         title='Public Rooms'
