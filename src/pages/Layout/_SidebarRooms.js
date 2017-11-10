@@ -33,11 +33,11 @@ const RoomsSidebar = ({ handleDirectMessageClose, rooms }) => {
         </div>
         <div>
           { notifications &&
-            <span className='notifications-count'>
+            <span className='notifications-count hide-on-focus'>
               { notifications }
             </span>
           }
-          <button className='anchor' onClick={handleClick}>
+          <button className='anchor hide-on-blur' onClick={handleClick}>
             <Icon type='close-circle-o' />
           </button>
         </div>

@@ -74,11 +74,11 @@ body {
       flex-direction: row;
       justify-content: space-between;
       width: 100%; }
-      #chat-root #sidebar .chat-sidebar-rooms-list-container .chat-room-link button {
+      #chat-root #sidebar .chat-sidebar-rooms-list-container .chat-room-link .hide-on-blur {
         display: none; }
-      #chat-root #sidebar .chat-sidebar-rooms-list-container .chat-room-link:hover button {
+      #chat-root #sidebar .chat-sidebar-rooms-list-container .chat-room-link:hover .hide-on-blur {
         display: inline-block; }
-      #chat-root #sidebar .chat-sidebar-rooms-list-container .chat-room-link:hover .notifications-count {
+      #chat-root #sidebar .chat-sidebar-rooms-list-container .chat-room-link:hover .hide-on-focus {
         display: none; }
   #chat-root button.anchor {
     background: inherit;

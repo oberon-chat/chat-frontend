@@ -109,15 +109,15 @@ body {
         justify-content: space-between;
         width: 100%;
 
-        button {
+        .hide-on-blur {
           display: none;
         }
 
-        &:hover button {
+        &:hover .hide-on-blur {
           display: inline-block;
         }
 
-        &:hover .notifications-count {
+        &:hover .hide-on-focus {
           display: none;
         }
       }
