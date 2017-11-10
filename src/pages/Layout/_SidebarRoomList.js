@@ -12,7 +12,8 @@ const RoomsSidebarList = ({ displayRoom, focusedRoom, lastMessage, newLink, room
   const renderRoom = (room) => {
     const lastRoomMessage = lastMessage(room)
     const lastMessageAt = isEmpty(lastRoomMessage) ? 0 : moment(lastRoomMessage.insertedAt).unix()
-    const lastViewedAt = moment(viewedAt(room) || 0).unix()
+    const lastViewed = viewedAt(room)
+    const lastViewedAt = lastViewed ? moment(lastViewed).unix() : moment().unix()
     const isFocused = (focusedRoom === room.slug)
     const hasNewMessages = !isFocused && (lastMessageAt > lastViewedAt)
     const classes = hasNewMessages ? 'new-message' : ''
