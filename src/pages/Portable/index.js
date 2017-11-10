@@ -42,8 +42,10 @@ const Opened = ({ isActive, onClose, onNew, room }) => {
   return (
     <div className='chat-portable-open'>
       { isActive && <ConnectionError /> }
-      <a onClick={handleClose}>Minimize</a>
-      <a onClick={handleNew}>New Chat</a>
+      <div className='chat-actions'>
+        <a onClick={handleNew}>New Chat</a>
+        <a onClick={handleClose}>Minimize</a>
+      </div>
       <div className='chat-container scroll-container'>
         { isActive ? <MessagesList room={room} /> : <span>How can we help?</span> }
       </div>
